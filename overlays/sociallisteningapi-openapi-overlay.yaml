@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for SocialListeningAPI
+  version: 1.0.0
+extends: ../openapi/sociallisteningapi-openapi.yml
+actions:
+- target: $.info
+  update:
+    contact:
+      name: SocialListeningAPI support
+      email: shash@sociallisteningapi.com
+      url: https://sociallisteningapi.com/support
+    termsOfService: https://sociallisteningapi.com/terms
+    x-operator: Nazare Studios Pty Ltd (ABN 18 695 273 995), Victoria, Australia
+- target: $.components.securitySchemes.ApiKeyAuth
+  update:
+    x-key-prefix: slapi_
+    x-docs: https://sociallisteningapi.com/docs/authentication
+- target: $.components.headers.RateLimitLimit
+  update:
+    x-documented-limit: The API key has reached 120 requests per minute (RATE_LIMITED example)
+- target: $
+  update:
+    x-pricing:
+      url: https://sociallisteningapi.com/pricing
+      model: one-time credit packs; per-operation x-credit-cost
+    x-mcp:
+      endpoint: https://api.sociallisteningapi.com/mcp
+      auth: oauth2
+      protected_resource_metadata: https://api.sociallisteningapi.com/.well-known/oauth-protected-resource/mcp

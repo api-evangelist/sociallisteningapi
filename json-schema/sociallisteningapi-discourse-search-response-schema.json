@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sociallisteningapi/main/json-schema/sociallisteningapi-discourse-search-response-schema.json",
+  "title": "DiscourseSearchResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/sociallisteningapi-openapi.yml#/components/schemas/DiscourseSearchResponse",
+  "type": "object",
+  "required": [
+    "success",
+    "platform",
+    "endpoint",
+    "data",
+    "pagination",
+    "request_id",
+    "credits_used",
+    "credits_remaining"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true
+    },
+    "platform": {
+      "type": "string",
+      "const": "discourse"
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "data": {
+      "$ref": "#/$defs/SocialSearchData"
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    },
+    "raw": {
+      "$ref": "#/$defs/RawResponse"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "credits_used": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "credits_remaining": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Author": {
+      "type": "object",
+      "required": [
+        "id",
+        "username",
+        "display_name",
+        "avatar_url",
+        "verified"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "username": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "avatar_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "verified": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Content": {
+      "type": "object",
+      "required": [
+        "title",
+        "text",
+        "media_urls",
+        "thumbnail_url"
+      ],
+      "properties": {
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "thumbnail_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Engagement": {
+      "type": "object",
+      "required": [
+        "views",
+        "likes",
+        "comments",
+        "shares",
+        "saves"
+      ],
+      "properties": {
+        "views": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "likes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "comments": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "shares": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "saves": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "next_cursor",
+        "has_more",
+        "page_size"
+      ],
+      "properties": {
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A provider cursor for a future paginated request, when available."
+        },
+        "has_more": {
+          "type": "boolean"
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "RawResponse": {
+      "description": "The unchanged upstream provider response. Returned only when the request sets raw to true."
+    },
+    "SocialPost": {
+      "type": "object",
+      "required": [
+        "id",
+        "platform",
+        "url",
+        "content",
+        "author",
+        "engagement",
+        "published_at",
+        "ext"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linkedin",
+            "x",
+            "reddit",
+            "facebook",
+            "hackernews",
+            "tiktok",
+            "youtube",
+            "pinterest",
+            "discourse"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "content": {
+          "$ref": "#/$defs/Content"
+        },
+        "author": {
+          "$ref": "#/$defs/Author"
+        },
+        "engagement": {
+          "$ref": "#/$defs/Engagement"
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "ext": {
+          "type": "object",
+          "description": "Platform-specific normalized fields.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SocialSearchData": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SocialPost"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

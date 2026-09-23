@@ -1,0 +1,38 @@
+generated: '2026-09-23'
+method: probed
+source: POST https://api.sociallisteningapi.com/mcp tools/list returned HTTP 401 {"error":"invalid_token"} with
+  WWW-Authenticate Bearer resource_metadata=https://api.sociallisteningapi.com/.well-known/oauth-protected-resource/mcp
+  (2026-09-23); product page https://sociallisteningapi.com/mcp
+name: SocialListeningAPI MCP
+status: live
+description: SocialListeningAPI's MCP connects public social search to Claude and ChatGPT. It is listed in Claude's
+  connector directory and connects through OAuth; searches use credits from the approved workspace. tools/list is
+  OAuth-gated, so tool names and input schemas were not introspected.
+deployment:
+  mode: remote
+  endpoint: https://api.sociallisteningapi.com/mcp
+  auth: oauth
+  verified: probed
+auth:
+  type: oauth2
+  protected_resource_metadata: https://api.sociallisteningapi.com/.well-known/oauth-protected-resource/mcp
+  authorization_server: https://api.sociallisteningapi.com
+  scopes:
+  - mcp
+  - mcp:search
+docs:
+- https://sociallisteningapi.com/mcp
+- https://sociallisteningapi.com/docs/connect-claude-sociallisteningapi-mcp
+capabilities_documented:
+- Search LinkedIn, X, Reddit, Facebook, Hacker News, TikTok, YouTube, Pinterest, or Google
+- Search Instagram users, hashtags, and places
+- Search public Reddit comments
+- Fetch Instagram or X profiles
+- Fetch X conversations, comments from one Reddit post, or LinkedIn profile posts
+limits_documented:
+- Discourse search is available through the HTTP API and is not available through the MCP.
+- The raw option defaults to false .
+- The MCP does not provide continuous monitoring, alerts, reply automation, native sentiment analysis, or lead scoring.
+tools_status: gated (tools/list requires an OAuth bearer token)
+note: Tool names are not published anonymously; tools/list needs an OAuth token. No tool crosswalk was written because
+  binding would require inventing tool names.

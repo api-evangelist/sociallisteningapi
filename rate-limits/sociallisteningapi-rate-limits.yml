@@ -1,0 +1,25 @@
+generated: '2026-09-23'
+method: searched
+source: https://api.sociallisteningapi.com/openapi.json
+docs: https://sociallisteningapi.com/docs/introduction
+name: SocialListeningAPI Rate Limits
+limits:
+- name: Per-API-key request rate
+  scope: per-key
+  window: 1 minute
+  max: 120
+  limit: 120
+  limit_text: The API key has reached 120 requests per minute
+  note: Quoted from the RATE_LIMITED error example in the provider OpenAPI (components.responses.RateLimited); the
+    prose docs do not state the number. X-RateLimit-Limit is described as "The maximum requests allowed in the current
+    minute."
+headers:
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset
+- Retry-After
+signaling: Rate-limit details are returned in X-RateLimit-Limit , X-RateLimit-Remaining , and X-RateLimit-Reset
+  . A 429 response also includes Retry-After .
+exhaustion_status: 429
+limit_count: 1
+note: Rate-limited requests use no credits (docs introduction).

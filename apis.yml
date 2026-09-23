@@ -1,0 +1,164 @@
+name: SocialListeningAPI
+
+aid: sociallisteningapi
+
+description: SocialListeningAPI is a social listening API for developers and AI agents that searches public posts, videos, profiles, forum discussions
+  and Google results across LinkedIn, X, Reddit, Facebook, Hacker News, TikTok, YouTube, Pinterest, Instagram, Google and Discourse through one
+  x-api-key and a normalized response shape. It is priced with one-time credit packs that do not expire, publishes an OpenAPI 3.1 document at
+  api.sociallisteningapi.com/openapi.json, and runs an OAuth-protected remote MCP server for Claude and ChatGPT. It began as the API behind the
+  Mentionkit social listening app and is operated by Nazare Studios Pty Ltd (Victoria, Australia).
+
+url: https://raw.githubusercontent.com/api-evangelist/sociallisteningapi/refs/heads/main/apis.yml
+
+image: https://sociallisteningapi.com/banner.jpg
+
+x-type: company
+
+x-source: apis-io-submission
+
+x-submitted-by: shash@mentionkit.com (primary, per the corrected 2026-09-22 submission; first form used shash@sociallisteningapi.com), apis.io/add
+  2026-09-22
+
+x-tier: profiled
+
+x-tier-reason: enrichment pass 2026-09-23 (local-v5; was apis.io/add submission worked by the support sweep
+  2026-09-23; host probed healthy (root 200, invented path 404, llms.txt 200))
+specificationVersion: '0.23'
+
+created: '2026-09-23'
+
+modified: '2026-09-23'
+
+tags:
+- Social Listening
+- Social Media
+- Search
+- Brand Monitoring
+- Market Research
+- MCP
+- Reddit
+- LinkedIn
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+common:
+- type: MCPServer
+  url: mcp/sociallisteningapi-mcp.yml
+- type: AgenticAccess
+  url: agentic-access/sociallisteningapi-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/sociallisteningapi-rate-limits.yml
+- type: Plans
+  url: plans/sociallisteningapi-plans-pricing.yml
+- type: Spectral
+  url: rules/sociallisteningapi-rules.yml
+- type: JSONLD
+  url: json-ld/sociallisteningapi-context.jsonld
+- type: Vocabulary
+  url: vocabulary/sociallisteningapi-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/sociallisteningapi-data-model.yml
+- type: Conventions
+  url: conventions/sociallisteningapi-conventions.yml
+- type: OAuthScopes
+  url: scopes/sociallisteningapi-scopes.yml
+- type: Lifecycle
+  url: lifecycle/sociallisteningapi-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/sociallisteningapi-problem-types.yml
+- type: Conformance
+  url: conformance/sociallisteningapi-conformance.yml
+- type: Overlay
+  url: overlays/sociallisteningapi-openapi-overlay.yaml
+- type: LLMsTxt
+  url: llms/sociallisteningapi-llms.txt
+- type: WellKnown
+  url: well-known/sociallisteningapi-well-known.yml
+- type: Hosts
+  url: hosts/sociallisteningapi-hosts.yml
+- type: Vendors
+  url: vendors/sociallisteningapi-vendors.yml
+- type: DomainSecurity
+  url: security/sociallisteningapi-domain-security.yml
+- type: Authentication
+  url: authentication/sociallisteningapi-authentication.yml
+- type: Website
+  url: https://sociallisteningapi.com/
+- type: Documentation
+  url: https://sociallisteningapi.com/docs/introduction
+- type: APIReference
+  url: https://sociallisteningapi.com/docs/introduction
+- type: GettingStarted
+  url: https://sociallisteningapi.com/docs/authentication
+- type: Pricing
+  url: https://sociallisteningapi.com/pricing
+- type: Support
+  url: https://sociallisteningapi.com/support
+- type: Blog
+  url: https://sociallisteningapi.com/articles
+- type: SignUp
+  url: https://app.sociallisteningapi.com?type=signup
+- type: Login
+  url: https://app.sociallisteningapi.com?type=login
+- type: TermsOfService
+  url: https://sociallisteningapi.com/terms
+- type: PrivacyPolicy
+  url: https://sociallisteningapi.com/privacy
+
+apis:
+- aid: sociallisteningapi:sociallisteningapi
+  name: SocialListeningAPI
+  description: REST API that searches and retrieves public social data (LinkedIn, X, Reddit, Facebook, Hacker News, TikTok, YouTube, Pinterest,
+    Instagram, Google and Discourse) with a normalized response, cursor pagination and per-endpoint credit costs. Every path accepts GET with
+    query parameters or POST with a JSON body; requests authenticate with an x-api-key header (keys start with slapi_).
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  image: https://sociallisteningapi.com/banner.jpg
+  tags:
+  - Social Listening
+  - Social Media
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sociallisteningapi.com/openapi.json
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-mcp
+  name: SocialListeningAPI MCP Server
+  description: Hosted remote MCP server for Claude and ChatGPT that exposes the SocialListeningAPI search tools (all sources except Discourse).
+    Clients connect through OAuth 2.0 (authorization code + PKCE, scopes mcp and mcp:search) and searches draw on the approved workspace's credits.
+  humanURL: https://sociallisteningapi.com/mcp
+  baseURL: https://api.sociallisteningapi.com/mcp
+  image: https://sociallisteningapi.com/banner.jpg
+  tags:
+  - MCP
+  - Social Listening
+  properties:
+  - type: Documentation
+    url: https://sociallisteningapi.com/mcp
+  - type: GettingStarted
+    url: https://sociallisteningapi.com/docs/connect-claude-sociallisteningapi-mcp
+x-enrichment:
+  date: '2026-09-23'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v5

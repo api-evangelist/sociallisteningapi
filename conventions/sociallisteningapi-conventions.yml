@@ -1,0 +1,76 @@
+generated: '2026-09-23'
+method: searched
+source: https://sociallisteningapi.com/docs/introduction
+authentication:
+  style: API key in x-api-key header (prefix slapi_); MCP uses OAuth 2.0 bearer tokens
+  ref: authentication/sociallisteningapi-authentication.yml
+request_style: 'Every API path accepts both GET and POST. Send parameters in the query string for GET, or as JSON
+  with Content-Type: application/json for POST.'
+idempotency:
+  coverage: na
+  note: The API is read-only search/retrieval (GET, and POST used only as a JSON-body alternative for the same reads);
+    there is no mutating surface and no Idempotency-Key mechanism.
+reversibility:
+  status: na
+  note: 'Read-only API: no write operations to reverse. Credits consumed by successful calls are not refundable
+    via the API.'
+dry_run:
+  status: na
+pagination:
+  style: cursor
+  request_param: cursor
+  response_fields:
+  - pagination.next_cursor
+  - pagination.has_more
+  - pagination.page_size
+  text: When has_more is true , send next_cursor as the next request’s cursor .
+field_expansion:
+  raw: Set raw to true to include the original provider response (field raw); defaults to false.
+  exact: Supported exact-search paths wrap the query in double quotes by default. Set exact to false to send the
+    query unchanged.
+metadata:
+  response_fields:
+  - success
+  - platform
+  - endpoint
+  - data
+  - pagination
+  - raw
+  - request_id
+  - credits_used
+  - credits_remaining
+  normalized_item:
+  - id
+  - platform
+  - url
+  - content
+  - author
+  - engagement
+  - published_at
+  - ext
+request_tracing:
+  header: X-Request-Id
+  body_field: request_id
+  text: 'request_id : the ID to share when you need help with a request.'
+versioning:
+  style: path
+  current: v1
+  note: Paths are prefixed /api/v1; the OpenAPI info.version is 1.0.0 with x-updated-at 2026-09-23. No versioning
+    or deprecation policy is published.
+error_envelope:
+  ref: errors/sociallisteningapi-problem-types.yml
+  shape: '{ success: false, error: { type, message, status }, request_id, credits_used, credits_remaining }'
+rate_limit_signaling:
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - Retry-After
+  status: 429
+  ref: rate-limits/sociallisteningapi-rate-limits.yml
+billing_signaling:
+  fields:
+  - credits_used
+  - credits_remaining
+  extension: x-credit-cost per operation in the OpenAPI
+  status_on_exhaustion: 402

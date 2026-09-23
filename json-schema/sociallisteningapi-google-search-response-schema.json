@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sociallisteningapi/main/json-schema/sociallisteningapi-google-search-response-schema.json",
+  "title": "GoogleSearchResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/sociallisteningapi-openapi.yml#/components/schemas/GoogleSearchResponse",
+  "type": "object",
+  "required": [
+    "success",
+    "platform",
+    "endpoint",
+    "data",
+    "pagination",
+    "request_id",
+    "credits_used",
+    "credits_remaining"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true
+    },
+    "platform": {
+      "type": "string",
+      "const": "google"
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "data": {
+      "$ref": "#/$defs/GoogleSearchData"
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    },
+    "raw": {
+      "$ref": "#/$defs/RawResponse"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "credits_used": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "credits_remaining": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "GoogleResult": {
+      "type": "object",
+      "required": [
+        "id",
+        "platform",
+        "url",
+        "title",
+        "description",
+        "published_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "const": "google"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GoogleSearchData": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GoogleResult"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "next_cursor",
+        "has_more",
+        "page_size"
+      ],
+      "properties": {
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A provider cursor for a future paginated request, when available."
+        },
+        "has_more": {
+          "type": "boolean"
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "RawResponse": {
+      "description": "The unchanged upstream provider response. Returned only when the request sets raw to true."
+    }
+  }
+}

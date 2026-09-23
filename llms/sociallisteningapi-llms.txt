@@ -1,0 +1,135 @@
+# sociallisteningapi
+
+sociallisteningapi searches public posts, videos, profiles, forum discussions, and Google results through one API key and a normalized response structure.
+
+## Core Capabilities
+- Search public posts and videos from LinkedIn, X, Reddit, Facebook, Hacker News, TikTok, and YouTube.
+- Search public Reddit comments by keyword.
+- Search public Instagram users, hashtags, and places, and retrieve public profiles.
+- Search posts in one public Discourse forum by URL and keyword.
+- Retrieve Google results through the same API key.
+- Use a normalized response structure across supported sources.
+- Buy one-time credit packs that do not expire.
+- Read the public endpoint documentation and OpenAPI document.
+
+## Pages
+- https://sociallisteningapi.com/
+- https://app.sociallisteningapi.com
+- https://sociallisteningapi.com/articles
+- https://sociallisteningapi.com/discourse-search-api
+- https://sociallisteningapi.com/docs/authentication
+- https://sociallisteningapi.com/docs/connect-claude-sociallisteningapi-mcp
+- https://sociallisteningapi.com/docs/do-credits-expire
+- https://sociallisteningapi.com/docs/do-empty-results-use-credits
+- https://sociallisteningapi.com/docs/do-failed-api-calls-use-credits
+- https://sociallisteningapi.com/docs/get-api-discourse-search
+- https://sociallisteningapi.com/docs/get-api-facebook-search
+- https://sociallisteningapi.com/docs/get-api-google-search
+- https://sociallisteningapi.com/docs/get-api-hackernews-search
+- https://sociallisteningapi.com/docs/get-api-instagram-profile
+- https://sociallisteningapi.com/docs/get-api-instagram-search
+- https://sociallisteningapi.com/docs/get-api-linkedin-profile
+- https://sociallisteningapi.com/docs/get-api-linkedin-profile-posts
+- https://sociallisteningapi.com/docs/get-api-linkedin-search
+- https://sociallisteningapi.com/docs/get-api-linkedin-user-posts
+- https://sociallisteningapi.com/docs/get-api-pinterest-search
+- https://sociallisteningapi.com/docs/get-api-reddit-post-comments
+- https://sociallisteningapi.com/docs/get-api-reddit-search-comments
+- https://sociallisteningapi.com/docs/get-api-reddit-search-posts
+- https://sociallisteningapi.com/docs/get-api-tiktok-search
+- https://sociallisteningapi.com/docs/get-api-x-search
+- https://sociallisteningapi.com/docs/get-api-x-tweet-replies
+- https://sociallisteningapi.com/docs/get-api-x-tweet-thread
+- https://sociallisteningapi.com/docs/get-api-x-user
+- https://sociallisteningapi.com/docs/get-api-x-user-posts
+- https://sociallisteningapi.com/docs/get-api-youtube-search
+- https://sociallisteningapi.com/docs/get-openapi-json
+- https://sociallisteningapi.com/docs/how-do-credit-packs-work
+- https://sociallisteningapi.com/docs/how-many-credits-does-an-api-call-cost
+- https://sociallisteningapi.com/docs/how-many-free-credits-do-i-get
+- https://sociallisteningapi.com/docs/introduction
+- https://sociallisteningapi.com/docs/what-happens-when-i-run-out-of-credits
+- https://sociallisteningapi.com/docs/why-not-use-chatgpt-or-claude
+- https://sociallisteningapi.com/docs/why-use-sociallisteningapi-instead-of-apify
+- https://sociallisteningapi.com/facebook-search-api
+- https://sociallisteningapi.com/google-search-api
+- https://sociallisteningapi.com/hacker-news-api
+- https://sociallisteningapi.com/instagram-search-api
+- https://sociallisteningapi.com/linkedin-search-api
+- https://sociallisteningapi.com/llms.txt
+- https://sociallisteningapi.com/mcp
+- https://sociallisteningapi.com/pinterest-search-api
+- https://sociallisteningapi.com/platforms
+- https://sociallisteningapi.com/playbooks
+- https://sociallisteningapi.com/playbooks/analyze-public-posts-for-product-use-cases
+- https://sociallisteningapi.com/playbooks/build-brand-mention-alerts-api
+- https://sociallisteningapi.com/playbooks/build-client-market-research-report
+- https://sociallisteningapi.com/playbooks/build-community-faq-from-public-questions
+- https://sociallisteningapi.com/playbooks/build-competitor-battlecards-from-public-data
+- https://sociallisteningapi.com/playbooks/build-event-based-account-list
+- https://sociallisteningapi.com/playbooks/build-google-sheets-social-trend-tracker
+- https://sociallisteningapi.com/playbooks/build-investor-market-discussion-brief
+- https://sociallisteningapi.com/playbooks/build-pricing-objection-report
+- https://sociallisteningapi.com/playbooks/build-sales-objection-library
+- https://sociallisteningapi.com/playbooks/build-social-intent-feed-for-abm
+- https://sociallisteningapi.com/playbooks/build-social-media-crisis-warning-queue
+- https://sociallisteningapi.com/playbooks/build-startup-funding-trigger-list
+- https://sociallisteningapi.com/playbooks/build-voice-of-customer-message-bank
+- https://sociallisteningapi.com/playbooks/compare-category-demand-by-platform
+- https://sociallisteningapi.com/playbooks/competitor-complaint-product-gap-report
+- https://sociallisteningapi.com/playbooks/conference-content-follow-up-brief
+- https://sociallisteningapi.com/playbooks/curate-weekly-niche-newsletter
+- https://sociallisteningapi.com/playbooks/detect-emerging-category-terms
+- https://sociallisteningapi.com/playbooks/facebook-voice-of-customer-research
+- https://sociallisteningapi.com/playbooks/find-affiliates-from-tiktok-youtube
+- https://sociallisteningapi.com/playbooks/find-b2b-affiliates-linkedin-youtube
+- https://sociallisteningapi.com/playbooks/find-b2b-leads-from-linkedin-posts
+- https://sociallisteningapi.com/playbooks/find-co-marketing-partners
+- https://sociallisteningapi.com/playbooks/find-competitor-alternative-buyers
+- https://sociallisteningapi.com/playbooks/find-content-ideas-from-public-questions
+- https://sociallisteningapi.com/playbooks/find-correct-product-misconceptions
+- https://sociallisteningapi.com/playbooks/find-customer-pain-points-from-public-posts
+- https://sociallisteningapi.com/playbooks/find-customer-story-candidates
+- https://sociallisteningapi.com/playbooks/find-early-adopters-on-hacker-news
+- https://sociallisteningapi.com/playbooks/find-facebook-affiliate-creator-partners
+- https://sociallisteningapi.com/playbooks/find-facebook-content-ideas-public-posts
+- https://sociallisteningapi.com/playbooks/find-feature-requests-in-public-posts
+- https://sociallisteningapi.com/playbooks/find-leads-from-facebook-recommendation-posts
+- https://sociallisteningapi.com/playbooks/find-leads-from-hiring-signals
+- https://sociallisteningapi.com/playbooks/find-local-service-demand-facebook-posts
+- https://sociallisteningapi.com/playbooks/find-micro-influencers-in-your-niche
+- https://sociallisteningapi.com/playbooks/find-new-product-launch-leads
+- https://sociallisteningapi.com/playbooks/find-onboarding-friction-public-posts
+- https://sociallisteningapi.com/playbooks/find-podcast-guests-and-sponsors
+- https://sociallisteningapi.com/playbooks/find-recommendation-leads-on-reddit
+- https://sociallisteningapi.com/playbooks/find-reddit-comparison-questions
+- https://sociallisteningapi.com/playbooks/find-reddit-promotion-feedback-threads
+- https://sociallisteningapi.com/playbooks/find-sales-opportunities-on-x
+- https://sociallisteningapi.com/playbooks/find-seo-content-gaps-with-social-search
+- https://sociallisteningapi.com/playbooks/find-tiktok-affiliates-around-trends
+- https://sociallisteningapi.com/playbooks/find-ugc-creators-by-topic
+- https://sociallisteningapi.com/playbooks/find-video-hooks-tiktok-youtube
+- https://sociallisteningapi.com/playbooks/find-youtube-reviewers-for-product-launch
+- https://sociallisteningapi.com/playbooks/measure-public-search-share-of-voice
+- https://sociallisteningapi.com/playbooks/monitor-campaign-phrases-hashtags
+- https://sociallisteningapi.com/playbooks/monitor-facebook-brand-competitor-posts
+- https://sociallisteningapi.com/playbooks/promote-product-in-reddit-discussions
+- https://sociallisteningapi.com/playbooks/publish-original-social-data-report
+- https://sociallisteningapi.com/playbooks/recruit-brand-ambassadors-from-brand-mentions
+- https://sociallisteningapi.com/playbooks/route-public-support-questions
+- https://sociallisteningapi.com/playbooks/track-competitor-launches-positioning
+- https://sociallisteningapi.com/playbooks/track-facebook-event-discussion
+- https://sociallisteningapi.com/playbooks/track-founder-executive-mentions
+- https://sociallisteningapi.com/playbooks/track-journalist-expert-source-requests
+- https://sociallisteningapi.com/playbooks/track-public-reputation-sources
+- https://sociallisteningapi.com/playbooks/validate-ama-topic-with-social-search
+- https://sociallisteningapi.com/playbooks/validate-product-idea-with-social-search
+- https://sociallisteningapi.com/playbooks/weekly-competitor-mention-brief
+- https://sociallisteningapi.com/pricing
+- https://sociallisteningapi.com/privacy
+- https://sociallisteningapi.com/reddit-search-api
+- https://sociallisteningapi.com/support
+- https://sociallisteningapi.com/terms
+- https://sociallisteningapi.com/tiktok-search-api
+- https://sociallisteningapi.com/twitter-search-api
+- https://sociallisteningapi.com/youtube-search-api

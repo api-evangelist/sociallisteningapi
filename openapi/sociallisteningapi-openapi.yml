@@ -1,0 +1,5608 @@
+openapi: 3.1.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+info:
+  title: SocialListeningAPI
+  version: 1.0.0
+  description: Search and retrieve public social data through one normalized API.
+  x-updated-at: '2026-09-23T00:00:00.000Z'
+servers:
+- url: https://api.sociallisteningapi.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: meta
+  description: API discovery endpoints.
+  x-display-name: API reference
+- name: instagram
+  description: Instagram API endpoints.
+  x-display-name: Instagram
+  x-logo: /instagram.svg
+- name: linkedin
+  description: LinkedIn API endpoints.
+  x-display-name: LinkedIn
+  x-logo: /linkedin.svg
+- name: x
+  description: X API endpoints.
+  x-display-name: X
+  x-logo: /x.svg
+- name: reddit
+  description: Reddit API endpoints.
+  x-display-name: Reddit
+  x-logo: /reddit.svg
+- name: facebook
+  description: Facebook API endpoints.
+  x-display-name: Facebook
+  x-logo: /facebook.svg
+- name: hackernews
+  description: Hacker News API endpoints.
+  x-display-name: Hacker News
+  x-logo: /hn.svg
+- name: tiktok
+  description: TikTok API endpoints.
+  x-display-name: TikTok
+  x-logo: /tiktok.svg
+- name: youtube
+  description: YouTube API endpoints.
+  x-display-name: YouTube
+  x-logo: /youtube.svg
+- name: pinterest
+  description: Pinterest API endpoints.
+  x-display-name: Pinterest
+  x-logo: /pinterest.svg
+- name: google
+  description: Google API endpoints.
+  x-display-name: Google
+  x-logo: /google.svg
+- name: discourse
+  description: Discourse API endpoints.
+  x-display-name: Discourse
+  x-logo: /discourse.svg
+paths:
+  /openapi.json:
+    get:
+      operationId: getOpenApiDocument
+      tags:
+      - meta
+      summary: Get the OpenAPI document
+      description: Download the current OpenAPI 3.1 contract for SocialListeningAPI endpoints, parameters, schemas, responses,
+        and authentication.
+      security: []
+      responses:
+        '200':
+          description: The OpenAPI document.
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                openapi: 3.1.0
+                info:
+                  title: SocialListeningAPI
+                paths:
+                  /api/v1/linkedin/search: {}
+  /api/v1/instagram/search:
+    get:
+      operationId: searchInstagram
+      tags:
+      - instagram
+      summary: Search Instagram
+      description: Search public Instagram users, hashtags, and places by keyword. Returns normalized discovery results, without
+        post content.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoverySearchResponse'
+              example:
+                success: true
+                platform: instagram
+                endpoint: /api/v1/instagram/search
+                data:
+                  items:
+                  - id: '25025320'
+                    platform: instagram
+                    type: user
+                    name: Instagram
+                    username: instagram
+                    url: https://www.instagram.com/instagram/
+                    image_url: https://example.com/instagram.jpg
+                    verified: true
+                    count: null
+                    ext:
+                      position: 0
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  data:
+                    query: instagram
+                    users: []
+                    hashtags: []
+                    places: []
+                    keywords: []
+                    rank_token: example-rank-token
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchInstagramWithPost
+      tags:
+      - instagram
+      summary: Search Instagram
+      description: Search public Instagram users, hashtags, and places by keyword. Returns normalized discovery results, without
+        post content.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoverySearchResponse'
+              example:
+                success: true
+                platform: instagram
+                endpoint: /api/v1/instagram/search
+                data:
+                  items:
+                  - id: '25025320'
+                    platform: instagram
+                    type: user
+                    name: Instagram
+                    username: instagram
+                    url: https://www.instagram.com/instagram/
+                    image_url: https://example.com/instagram.jpg
+                    verified: true
+                    count: null
+                    ext:
+                      position: 0
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  data:
+                    query: instagram
+                    users: []
+                    hashtags: []
+                    places: []
+                    keywords: []
+                    rank_token: example-rank-token
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              raw: true
+  /api/v1/instagram/profile:
+    get:
+      operationId: getInstagramProfile
+      tags:
+      - instagram
+      summary: Get an Instagram profile
+      description: Get a public Instagram profile by username, with optional raw provider data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: instagram
+                endpoint: /api/v1/instagram/profile
+                data:
+                  id: '25025320'
+                  platform: instagram
+                  username: instagram
+                  display_name: Instagram
+                  avatar_url: https://example.com/instagram.jpg
+                  bio: Discover what's new on Instagram.
+                  verified: true
+                  followers: 686000000
+                  following: 184
+                  posts_count: 8000
+                  likes_count: null
+                  url: https://www.instagram.com/instagram/
+                  location: null
+                  external_url: https://about.instagram.com/
+                  private: false
+                  joined_at: null
+                  ext:
+                    category_name: Digital creator
+                    business_category_name: null
+                    business_email: null
+                    business_phone_number: null
+                    is_business_account: false
+                    is_professional_account: true
+                    bio_links: []
+                    pronouns: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  data:
+                    user: {}
+                  status: ok
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: The Instagram username without the @ symbol.
+        schema:
+          type: string
+          minLength: 1
+        example: instagram
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getInstagramProfileWithPost
+      tags:
+      - instagram
+      summary: Get an Instagram profile
+      description: Get a public Instagram profile by username, with optional raw provider data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: instagram
+                endpoint: /api/v1/instagram/profile
+                data:
+                  id: '25025320'
+                  platform: instagram
+                  username: instagram
+                  display_name: Instagram
+                  avatar_url: https://example.com/instagram.jpg
+                  bio: Discover what's new on Instagram.
+                  verified: true
+                  followers: 686000000
+                  following: 184
+                  posts_count: 8000
+                  likes_count: null
+                  url: https://www.instagram.com/instagram/
+                  location: null
+                  external_url: https://about.instagram.com/
+                  private: false
+                  joined_at: null
+                  ext:
+                    category_name: Digital creator
+                    business_category_name: null
+                    business_email: null
+                    business_phone_number: null
+                    is_business_account: false
+                    is_professional_account: true
+                    bio_links: []
+                    pronouns: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  data:
+                    user: {}
+                  status: ok
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  description: The Instagram username without the @ symbol.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              username: instagram
+              raw: true
+  /api/v1/linkedin/search:
+    get:
+      operationId: searchLinkedin
+      tags:
+      - linkedin
+      summary: Search LinkedIn posts
+      description: Search public LinkedIn posts by keyword, newest first, and return normalized post data with source URLs.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/search
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to
+          send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchLinkedinWithPost
+      tags:
+      - linkedin
+      summary: Search LinkedIn posts
+      description: Search public LinkedIn posts by keyword, newest first, and return normalized post data with source URLs.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/search
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to
+                    false to send the query unchanged.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              cursor: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+              raw: true
+  /api/v1/linkedin/profile:
+    get:
+      operationId: getLinkedinProfile
+      tags:
+      - linkedin
+      summary: Get a LinkedIn profile
+      description: Get one public LinkedIn profile by profile URL, with normalized profile data and optional raw provider
+        data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/profile
+                data:
+                  id: ACoAAABexample
+                  platform: linkedin
+                  username: alexmorgan
+                  display_name: Alex Morgan
+                  avatar_url: https://example.com/linkedin-avatar.jpg
+                  bio: Building useful software for developers.
+                  verified: true
+                  followers: 25000
+                  following: null
+                  posts_count: null
+                  likes_count: null
+                  url: https://www.linkedin.com/in/alexmorgan
+                  location: Melbourne, Victoria, Australia
+                  external_url: https://example.com
+                  private: null
+                  joined_at: '2023-11-07T05:31:56Z'
+                  ext:
+                    headline: Founder and software developer
+                    connections_count: 500
+                    open_to_work: false
+                    hiring: true
+                    premium: true
+                    influencer: false
+                    creator: true
+                    cover_picture_url: https://example.com/linkedin-cover.jpg
+                    top_skills:
+                    - JavaScript
+                    - APIs
+                    current_positions: []
+                    education: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  element:
+                    id: ACoAAABexample
+                    publicIdentifier: alexmorgan
+                    firstName: Alex
+                    lastName: Morgan
+                  status: OK
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: profile_url
+        in: query
+        required: true
+        description: The full LinkedIn profile URL.
+        schema:
+          type: string
+          minLength: 1
+        example: https://www.linkedin.com/in/williamhgates
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getLinkedinProfileWithPost
+      tags:
+      - linkedin
+      summary: Get a LinkedIn profile
+      description: Get one public LinkedIn profile by profile URL, with normalized profile data and optional raw provider
+        data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/profile
+                data:
+                  id: ACoAAABexample
+                  platform: linkedin
+                  username: alexmorgan
+                  display_name: Alex Morgan
+                  avatar_url: https://example.com/linkedin-avatar.jpg
+                  bio: Building useful software for developers.
+                  verified: true
+                  followers: 25000
+                  following: null
+                  posts_count: null
+                  likes_count: null
+                  url: https://www.linkedin.com/in/alexmorgan
+                  location: Melbourne, Victoria, Australia
+                  external_url: https://example.com
+                  private: null
+                  joined_at: '2023-11-07T05:31:56Z'
+                  ext:
+                    headline: Founder and software developer
+                    connections_count: 500
+                    open_to_work: false
+                    hiring: true
+                    premium: true
+                    influencer: false
+                    creator: true
+                    cover_picture_url: https://example.com/linkedin-cover.jpg
+                    top_skills:
+                    - JavaScript
+                    - APIs
+                    current_positions: []
+                    education: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  element:
+                    id: ACoAAABexample
+                    publicIdentifier: alexmorgan
+                    firstName: Alex
+                    lastName: Morgan
+                  status: OK
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - profile_url
+              properties:
+                profile_url:
+                  type: string
+                  minLength: 1
+                  description: The full LinkedIn profile URL.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              profile_url: https://www.linkedin.com/in/williamhgates
+              raw: true
+  /api/v1/linkedin/profile/posts:
+    get:
+      operationId: getLinkedinProfilePosts
+      tags:
+      - linkedin
+      summary: Get LinkedIn profile posts
+      description: Get public posts from a LinkedIn profile URL, newest first, with normalized post data and pagination when
+        available.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/profile/posts
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  pagination:
+                    paginationToken: null
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: profile_url
+        in: query
+        required: true
+        description: The full LinkedIn profile URL.
+        schema:
+          type: string
+          minLength: 1
+        example: https://www.linkedin.com/in/williamhgates
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getLinkedinProfilePostsWithPost
+      tags:
+      - linkedin
+      summary: Get LinkedIn profile posts
+      description: Get public posts from a LinkedIn profile URL, newest first, with normalized post data and pagination when
+        available.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/profile/posts
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  pagination:
+                    paginationToken: null
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - profile_url
+              properties:
+                profile_url:
+                  type: string
+                  minLength: 1
+                  description: The full LinkedIn profile URL.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              profile_url: https://www.linkedin.com/in/williamhgates
+              cursor: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+              raw: true
+  /api/v1/linkedin/user/posts:
+    get:
+      operationId: getLinkedinUserPosts
+      tags:
+      - linkedin
+      summary: Get LinkedIn user posts
+      description: Get public posts from a LinkedIn profile URL, newest first, with normalized post data and pagination when
+        available.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/user/posts
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  pagination:
+                    paginationToken: null
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: profile_url
+        in: query
+        required: true
+        description: The full LinkedIn profile URL.
+        schema:
+          type: string
+          minLength: 1
+        example: https://www.linkedin.com/in/williamhgates
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getLinkedinUserPostsWithPost
+      tags:
+      - linkedin
+      summary: Get LinkedIn user posts
+      description: Get public posts from a LinkedIn profile URL, newest first, with normalized post data and pagination when
+        available.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: linkedin
+                endpoint: /api/v1/linkedin/user/posts
+                data:
+                  items:
+                  - id: linkedin_post_123
+                    platform: linkedin
+                    url: https://www.linkedin.com/posts/example
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.linkedin.com/in/alex
+                      article_url: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  pagination:
+                    paginationToken: null
+                  elements: []
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - profile_url
+              properties:
+                profile_url:
+                  type: string
+                  minLength: 1
+                  description: The full LinkedIn profile URL.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              profile_url: https://www.linkedin.com/in/williamhgates
+              cursor: slapi_li_eyJwYWdlIjoyLCJwYWdpbmF0aW9uVG9rZW4iOiJEQUFCQ2dBQkhBWS4uLiJ9
+              raw: true
+  /api/v1/x/search:
+    get:
+      operationId: searchX
+      tags:
+      - x
+      summary: Search X posts
+      description: Search public X posts by keyword, newest first, and return normalized post data with original source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/search
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  tweets: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchXWithPost
+      tags:
+      - x
+      summary: Search X posts
+      description: Search public X posts by keyword, newest first, and return normalized post data with original source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/search
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  tweets: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/x/user:
+    get:
+      operationId: getXUser
+      tags:
+      - x
+      summary: Get an X user
+      description: Get a public X profile by username, with optional raw provider data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/user
+                data:
+                  id: '44196397'
+                  platform: x
+                  username: alex
+                  display_name: Alex Morgan
+                  avatar_url: https://example.com/avatar.jpg
+                  bio: Building useful software.
+                  verified: true
+                  followers: 25000
+                  following: 420
+                  posts_count: 3200
+                  likes_count: 8500
+                  url: https://x.com/alex
+                  location: Melbourne
+                  external_url: https://example.com
+                  private: false
+                  joined_at: '2009-06-02T20:12:29.000Z'
+                  ext:
+                    cover_picture: https://example.com/cover.jpg
+                    media_count: 240
+                    can_dm: false
+                    pinned_tweet_ids:
+                    - '1890000000000000000'
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  status: success
+                  data: {}
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: The X username without the @ symbol.
+        schema:
+          type: string
+          minLength: 1
+        example: elonmusk
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getXUserWithPost
+      tags:
+      - x
+      summary: Get an X user
+      description: Get a public X profile by username, with optional raw provider data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/user
+                data:
+                  id: '44196397'
+                  platform: x
+                  username: alex
+                  display_name: Alex Morgan
+                  avatar_url: https://example.com/avatar.jpg
+                  bio: Building useful software.
+                  verified: true
+                  followers: 25000
+                  following: 420
+                  posts_count: 3200
+                  likes_count: 8500
+                  url: https://x.com/alex
+                  location: Melbourne
+                  external_url: https://example.com
+                  private: false
+                  joined_at: '2009-06-02T20:12:29.000Z'
+                  ext:
+                    cover_picture: https://example.com/cover.jpg
+                    media_count: 240
+                    can_dm: false
+                    pinned_tweet_ids:
+                    - '1890000000000000000'
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  status: success
+                  data: {}
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  description: The X username without the @ symbol.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              username: elonmusk
+              raw: true
+  /api/v1/x/user/posts:
+    get:
+      operationId: getXUserPosts
+      tags:
+      - x
+      summary: Get X user posts
+      description: Get public posts from an X username, with normalized post data, source URLs, and pagination when available.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/user/posts
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  userName: alex
+                  tweets: []
+                  next_cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: username
+        in: query
+        required: true
+        description: The X username without the @ symbol.
+        schema:
+          type: string
+          minLength: 1
+        example: elonmusk
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getXUserPostsWithPost
+      tags:
+      - x
+      summary: Get X user posts
+      description: Get public posts from an X username, with normalized post data, source URLs, and pagination when available.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/user/posts
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  userName: alex
+                  tweets: []
+                  next_cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  description: The X username without the @ symbol.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              username: elonmusk
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/x/tweet/thread:
+    get:
+      operationId: getXTweetThread
+      tags:
+      - x
+      summary: Get an X tweet thread
+      description: Get the ordered self-thread containing an X post ID, with normalized post data and original source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/tweet/thread
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  conversationId: '1890000000000000000'
+                  thread_length: 1
+                  tweets: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: tweet_id
+        in: query
+        required: true
+        description: The numeric X tweet ID.
+        schema:
+          type: string
+          minLength: 1
+        example: '2057796375233073524'
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getXTweetThreadWithPost
+      tags:
+      - x
+      summary: Get an X tweet thread
+      description: Get the ordered self-thread containing an X post ID, with normalized post data and original source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/tweet/thread
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  conversationId: '1890000000000000000'
+                  thread_length: 1
+                  tweets: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - tweet_id
+              properties:
+                tweet_id:
+                  type: string
+                  minLength: 1
+                  description: The numeric X tweet ID.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              tweet_id: '2057796375233073524'
+              raw: true
+  /api/v1/x/tweet/replies:
+    get:
+      operationId: getXTweetReplies
+      tags:
+      - x
+      summary: Get X tweet replies
+      description: Get public replies to an X post ID, with normalized reply data, source URLs, and pagination when available.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/tweet/replies
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  tweetId: '1890000000000000000'
+                  replies: []
+                  next_cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: tweet_id
+        in: query
+        required: true
+        description: The numeric X tweet ID.
+        schema:
+          type: string
+          minLength: 1
+        example: '2019199325365227607'
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getXTweetRepliesWithPost
+      tags:
+      - x
+      summary: Get X tweet replies
+      description: Get public replies to an X post ID, with normalized reply data, source URLs, and pagination when available.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: x
+                endpoint: /api/v1/x/tweet/replies
+                data:
+                  items:
+                  - id: '1890000000000000000'
+                    platform: x
+                    url: https://x.com/alex/status/1890000000000000000
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      conversation_id: '1890000000000000000'
+                      quote_count: 2
+                      language: en
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  tweetId: '1890000000000000000'
+                  replies: []
+                  next_cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - tweet_id
+              properties:
+                tweet_id:
+                  type: string
+                  minLength: 1
+                  description: The numeric X tweet ID.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              tweet_id: '2019199325365227607'
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/reddit/search-posts:
+    get:
+      operationId: searchRedditPosts
+      tags:
+      - reddit
+      summary: Search Reddit posts
+      description: Search public Reddit posts by keyword, newest first, and return normalized post, subreddit, engagement,
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-posts
+                data:
+                  items:
+                  - id: 1abc234
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    content:
+                      title: How are you using social listening?
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      permalink: /r/marketing/comments/1abc234/example/
+                      upvote_ratio: 0.94
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to
+          send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchRedditPostsWithPost
+      tags:
+      - reddit
+      summary: Search Reddit posts
+      description: Search public Reddit posts by keyword, newest first, and return normalized post, subreddit, engagement,
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-posts
+                data:
+                  items:
+                  - id: 1abc234
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    content:
+                      title: How are you using social listening?
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      permalink: /r/marketing/comments/1abc234/example/
+                      upvote_ratio: 0.94
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to
+                    false to send the query unchanged.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/reddit/search-comments:
+    get:
+      operationId: searchRedditComments
+      tags:
+      - reddit
+      summary: Search Reddit comments
+      description: Search public Reddit comments by keyword, newest first, and return normalized comment, subreddit, and source
+        data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-comments
+                data:
+                  items:
+                  - id: https://www.reddit.com/r/marketing/comments/1abc234/example/#search-comment-1
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    parent_id: null
+                    post_id: null
+                    text: Social listening helped us find repeated customer questions.
+                    author:
+                      id: null
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      likes: 42
+                      replies: null
+                    flags:
+                      pinned: null
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      title: alex on marketing
+                      subreddit: marketing
+                      source: Reddit (Comment)
+                      domain: reddit.com
+                      type: comment
+                      post_upvotes: 1850
+                      post_comments: 274
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                  pages: 1
+                  count: 0
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to
+          send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchRedditCommentsWithPost
+      tags:
+      - reddit
+      summary: Search Reddit comments
+      description: Search public Reddit comments by keyword, newest first, and return normalized comment, subreddit, and source
+        data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-comments
+                data:
+                  items:
+                  - id: https://www.reddit.com/r/marketing/comments/1abc234/example/#search-comment-1
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    parent_id: null
+                    post_id: null
+                    text: Social listening helped us find repeated customer questions.
+                    author:
+                      id: null
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      likes: 42
+                      replies: null
+                    flags:
+                      pinned: null
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      title: alex on marketing
+                      subreddit: marketing
+                      source: Reddit (Comment)
+                      domain: reddit.com
+                      type: comment
+                      post_upvotes: 1850
+                      post_comments: 274
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                  pages: 1
+                  count: 0
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to
+                    false to send the query unchanged.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              raw: true
+  /api/v1/reddit/post/comments:
+    get:
+      operationId: getRedditPostComments
+      tags:
+      - reddit
+      summary: Get Reddit post comments
+      description: Get public comments and nested replies from a Reddit post URL, with normalized comment data and pagination.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/post/comments
+                data:
+                  items:
+                  - id: comment_123
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/comment_123/
+                    parent_id: t3_1abc234
+                    post_id: 1abc234
+                    text: This worked well for us.
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      likes: 12
+                      replies: 0
+                    flags:
+                      pinned: false
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      replies_cursor: null
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  post:
+                    id: 1abc234
+                  comments: []
+                  more:
+                    has_more: false
+                    cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: url
+        in: query
+        required: true
+        description: The full Reddit post URL.
+        schema:
+          type: string
+          minLength: 1
+        example: https://www.reddit.com/r/AskReddit/comments/1lfbo7u/example/
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getRedditPostCommentsWithPost
+      tags:
+      - reddit
+      summary: Get Reddit post comments
+      description: Get public comments and nested replies from a Reddit post URL, with normalized comment data and pagination.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/post/comments
+                data:
+                  items:
+                  - id: comment_123
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/comment_123/
+                    parent_id: t3_1abc234
+                    post_id: 1abc234
+                    text: This worked well for us.
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      likes: 12
+                      replies: 0
+                    flags:
+                      pinned: false
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      replies_cursor: null
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  post:
+                    id: 1abc234
+                  comments: []
+                  more:
+                    has_more: false
+                    cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  minLength: 1
+                  description: The full Reddit post URL.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              url: https://www.reddit.com/r/AskReddit/comments/1lfbo7u/example/
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/facebook/search:
+    get:
+      operationId: searchFacebook
+      tags:
+      - facebook
+      summary: Search Facebook posts
+      description: Search public Facebook posts by keyword, newest first, and return normalized post and engagement data.
+        Sentiment stays disabled.
+      x-credit-cost: 7
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: facebook
+                endpoint: /api/v1/facebook/search
+                data:
+                  items:
+                  - id: '122123115081122899'
+                    platform: facebook
+                    url: https://www.facebook.com/example/posts/122123115081122899
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: null
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.facebook.com/example
+                      external_url: null
+                      reactions:
+                        like: 35
+                        love: 10
+                        care: 3
+                        haha: 0
+                        wow: 0
+                        sad: 0
+                        angry: 0
+                      video: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  count: 1
+                  pages: 1
+                  posts: []
+                request_id: req_example123
+                credits_used: 7
+                credits_remaining: 93
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchFacebookWithPost
+      tags:
+      - facebook
+      summary: Search Facebook posts
+      description: Search public Facebook posts by keyword, newest first, and return normalized post and engagement data.
+        Sentiment stays disabled.
+      x-credit-cost: 7
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: facebook
+                endpoint: /api/v1/facebook/search
+                data:
+                  items:
+                  - id: '122123115081122899'
+                    platform: facebook
+                    url: https://www.facebook.com/example/posts/122123115081122899
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: null
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.facebook.com/example
+                      external_url: null
+                      reactions:
+                        like: 35
+                        love: 10
+                        care: 3
+                        haha: 0
+                        wow: 0
+                        sad: 0
+                        angry: 0
+                      video: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  count: 1
+                  pages: 1
+                  posts: []
+                request_id: req_example123
+                credits_used: 7
+                credits_remaining: 93
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              raw: true
+  /api/v1/hackernews/search:
+    get:
+      operationId: searchHackernews
+      tags:
+      - hackernews
+      summary: Search Hacker News posts
+      description: Search Hacker News stories and comments by keyword, newest first, and return normalized content, engagement,
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: hackernews
+                endpoint: /api/v1/hackernews/search
+                data:
+                  items:
+                  - id: '41234567'
+                    platform: hackernews
+                    url: https://news.ycombinator.com/item?id=41234567
+                    content:
+                      title: 'Show HN: A social listening API'
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: alex
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      story_id: '41234567'
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  hits: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+          pattern: ^[1-9][0-9]*$
+        example: '1'
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchHackernewsWithPost
+      tags:
+      - hackernews
+      summary: Search Hacker News posts
+      description: Search Hacker News stories and comments by keyword, newest first, and return normalized content, engagement,
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: hackernews
+                endpoint: /api/v1/hackernews/search
+                data:
+                  items:
+                  - id: '41234567'
+                    platform: hackernews
+                    url: https://news.ycombinator.com/item?id=41234567
+                    content:
+                      title: 'Show HN: A social listening API'
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: alex
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      story_id: '41234567'
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  hits: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                cursor:
+                  type: string
+                  minLength: 1
+                  pattern: ^[1-9][0-9]*$
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              cursor: '1'
+              raw: true
+  /api/v1/tiktok/search:
+    get:
+      operationId: searchTiktok
+      tags:
+      - tiktok
+      summary: Search TikTok posts
+      description: Search public TikTok posts by keyword and return normalized captions, creator details, engagement, publication
+        time, and source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: tiktok
+                endpoint: /api/v1/tiktok/search
+                data:
+                  items:
+                  - id: '7531234567890123456'
+                    platform: tiktok
+                    url: https://www.tiktok.com/@alex/video/7531234567890123456
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      content_type: video
+                      duration_milliseconds: 18000
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  videos: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchTiktokWithPost
+      tags:
+      - tiktok
+      summary: Search TikTok posts
+      description: Search public TikTok posts by keyword and return normalized captions, creator details, engagement, publication
+        time, and source URLs.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: tiktok
+                endpoint: /api/v1/tiktok/search
+                data:
+                  items:
+                  - id: '7531234567890123456'
+                    platform: tiktok
+                    url: https://www.tiktok.com/@alex/video/7531234567890123456
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      content_type: video
+                      duration_milliseconds: 18000
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  videos: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/youtube/search:
+    get:
+      operationId: searchYoutube
+      tags:
+      - youtube
+      summary: Search YouTube posts
+      description: Search public YouTube videos, Shorts, and live streams by keyword and return normalized video, channel,
+        engagement, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: youtube
+                endpoint: /api/v1/youtube/search
+                data:
+                  items:
+                  - id: BzSzwqb-OEE
+                    platform: youtube
+                    url: https://www.youtube.com/watch?v=BzSzwqb-OEE
+                    content:
+                      title: How to use social listening
+                      text: null
+                      media_urls: []
+                      thumbnail_url: https://i.ytimg.com/vi/BzSzwqb-OEE/hq720.jpg
+                    author:
+                      id: UCoRR6OLuIZ2-5VxtnQIaN2w
+                      username: sociallistening
+                      display_name: Social Listening
+                      avatar_url: https://yt3.ggpht.com/example=s88-c-k-c0x00ffffff-no-rj
+                      verified: null
+                    engagement:
+                      views: 14860541
+                      likes: null
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      content_type: video
+                      duration_seconds: 254
+                      duration_text: '4:14'
+                      published_time_text: 1 day ago
+                      badges:
+                      - 4K
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  videos: []
+                  channels: []
+                  playlists: []
+                  shorts: []
+                  shelves: []
+                  lives: []
+                  continuationToken: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchYoutubeWithPost
+      tags:
+      - youtube
+      summary: Search YouTube posts
+      description: Search public YouTube videos, Shorts, and live streams by keyword and return normalized video, channel,
+        engagement, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: youtube
+                endpoint: /api/v1/youtube/search
+                data:
+                  items:
+                  - id: BzSzwqb-OEE
+                    platform: youtube
+                    url: https://www.youtube.com/watch?v=BzSzwqb-OEE
+                    content:
+                      title: How to use social listening
+                      text: null
+                      media_urls: []
+                      thumbnail_url: https://i.ytimg.com/vi/BzSzwqb-OEE/hq720.jpg
+                    author:
+                      id: UCoRR6OLuIZ2-5VxtnQIaN2w
+                      username: sociallistening
+                      display_name: Social Listening
+                      avatar_url: https://yt3.ggpht.com/example=s88-c-k-c0x00ffffff-no-rj
+                      verified: null
+                    engagement:
+                      views: 14860541
+                      likes: null
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      content_type: video
+                      duration_seconds: 254
+                      duration_text: '4:14'
+                      published_time_text: 1 day ago
+                      badges:
+                      - 4K
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  videos: []
+                  channels: []
+                  playlists: []
+                  shorts: []
+                  shelves: []
+                  lives: []
+                  continuationToken: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              cursor: DAABCgABHAY...
+              raw: true
+  /api/v1/pinterest/search:
+    get:
+      operationId: searchPinterest
+      tags:
+      - pinterest
+      summary: Search Pinterest pins
+      description: Search public Pinterest pins by keyword and return normalized pin, image, creator, board, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: pinterest
+                endpoint: /api/v1/pinterest/search
+                data:
+                  items:
+                  - id: '3729612256605144'
+                    platform: pinterest
+                    url: https://www.pinterest.com/pin/3729612256605144/
+                    content:
+                      title: Savory Italian Pot Roast
+                      text: 'Italian Pot Roast: A Hearty and Flavorful Recipe'
+                      media_urls:
+                      - https://i.pinimg.com/originals/example.webp
+                      thumbnail_url: https://i.pinimg.com/originals/example.webp
+                    author:
+                      id: '3729749599852575'
+                      username: csadak
+                      display_name: Courtney Elizabeth
+                      avatar_url: https://i.pinimg.com/140x140_RS/example.jpg
+                      verified: false
+                    engagement:
+                      views: null
+                      likes: null
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2025-01-07T18:23:09.000Z'
+                    ext:
+                      external_url: https://example.com/italian-pot-roast
+                      domain: example.com
+                      auto_alt_text: A plate of Italian pot roast
+                      seo_alt_text: A plate of Italian pot roast
+                      is_promoted: false
+                      board_id: '3729680880427868'
+                      board_name: Food
+                      board_url: /csadak/food/
+                      board_pin_count: 423
+                pagination:
+                  next_cursor: Y2JVSG81V2sxcmNHRlpWM1J...
+                  has_more: true
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  pins: []
+                  cursor: Y2JVSG81V2sxcmNHRlpWM1J...
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: Y2JVSG81V2sxcmNHRlpWM1J...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchPinterestWithPost
+      tags:
+      - pinterest
+      summary: Search Pinterest pins
+      description: Search public Pinterest pins by keyword and return normalized pin, image, creator, board, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: pinterest
+                endpoint: /api/v1/pinterest/search
+                data:
+                  items:
+                  - id: '3729612256605144'
+                    platform: pinterest
+                    url: https://www.pinterest.com/pin/3729612256605144/
+                    content:
+                      title: Savory Italian Pot Roast
+                      text: 'Italian Pot Roast: A Hearty and Flavorful Recipe'
+                      media_urls:
+                      - https://i.pinimg.com/originals/example.webp
+                      thumbnail_url: https://i.pinimg.com/originals/example.webp
+                    author:
+                      id: '3729749599852575'
+                      username: csadak
+                      display_name: Courtney Elizabeth
+                      avatar_url: https://i.pinimg.com/140x140_RS/example.jpg
+                      verified: false
+                    engagement:
+                      views: null
+                      likes: null
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2025-01-07T18:23:09.000Z'
+                    ext:
+                      external_url: https://example.com/italian-pot-roast
+                      domain: example.com
+                      auto_alt_text: A plate of Italian pot roast
+                      seo_alt_text: A plate of Italian pot roast
+                      is_promoted: false
+                      board_id: '3729680880427868'
+                      board_name: Food
+                      board_url: /csadak/food/
+                      board_pin_count: 423
+                pagination:
+                  next_cursor: Y2JVSG81V2sxcmNHRlpWM1J...
+                  has_more: true
+                  page_size: 1
+                raw:
+                  success: true
+                  credits_remaining: 99
+                  credits_charged: 1
+                  pins: []
+                  cursor: Y2JVSG81V2sxcmNHRlpWM1J...
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              cursor: Y2JVSG81V2sxcmNHRlpWM1J...
+              raw: true
+  /api/v1/google/search:
+    get:
+      operationId: searchGoogle
+      tags:
+      - google
+      summary: Search Google
+      description: Search Google results by keyword and return normalized titles, descriptions, URLs, and result metadata
+        for available result types.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleSearchResponse'
+              example:
+                success: true
+                platform: google
+                endpoint: /api/v1/google/search
+                data:
+                  items:
+                  - id: https://example.com/social-listening-guide
+                    platform: google
+                    url: https://example.com/social-listening-guide
+                    title: A practical guide to social listening
+                    description: Learn how to find and review public conversations about your brand.
+                    published_at: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  results: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to
+          send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchGoogleWithPost
+      tags:
+      - google
+      summary: Search Google
+      description: Search Google results by keyword and return normalized titles, descriptions, URLs, and result metadata
+        for available result types.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleSearchResponse'
+              example:
+                success: true
+                platform: google
+                endpoint: /api/v1/google/search
+                data:
+                  items:
+                  - id: https://example.com/social-listening-guide
+                    platform: google
+                    url: https://example.com/social-listening-guide
+                    title: A practical guide to social listening
+                    description: Learn how to find and review public conversations about your brand.
+                    published_at: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  results: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to
+                    false to send the query unchanged.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              raw: true
+  /api/v1/discourse/search:
+    get:
+      operationId: searchDiscourse
+      tags:
+      - discourse
+      summary: Search a Discourse forum
+      description: Search posts in one public Discourse forum by URL and keyword, newest first, and return normalized post
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscourseSearchResponse'
+              example:
+                success: true
+                platform: discourse
+                endpoint: /api/v1/discourse/search
+                data:
+                  items:
+                  - id: discourse.32bit.cafe:8057
+                    platform: discourse
+                    url: https://discourse.32bit.cafe/t/32-bit-cafe-joins-the-fediverse/1173/1
+                    content:
+                      title: 32-Bit Cafe Joins the Fediverse!
+                      text: The 32-Bit Cafe is joining the fediverse with its own Pixelfed instance.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: xandra
+                      username: xandra
+                      display_name: xandra
+                      avatar_url: https://discourse.32bit.cafe/user_avatar/discourse.32bit.cafe/xandra/96/5075_2.png
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 17
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2024-08-06T20:20:28.409Z'
+                    ext:
+                      forum_url: https://discourse.32bit.cafe
+                      author_url: https://discourse.32bit.cafe/u/xandra
+                      topic_id: 1173
+                      topic_slug: 32-bit-cafe-joins-the-fediverse
+                      post_number: 1
+                      category_id: 5
+                      category_name: null
+                      category_slug: null
+                      topic_posts_count: 28
+                      topic_reply_count: 16
+                      tags: []
+                pagination:
+                  next_cursor: '2'
+                  has_more: true
+                  page_size: 1
+                raw:
+                  posts:
+                  - id: 8057
+                    username: xandra
+                    avatar_template: /user_avatar/discourse.32bit.cafe/xandra/{size}/5075_2.png
+                    created_at: '2024-08-06T20:20:28.409Z'
+                    like_count: 17
+                    blurb: The 32-Bit Cafe is joining the fediverse with its own Pixelfed instance.
+                    post_number: 1
+                    topic_id: 1173
+                  topics:
+                  - id: 1173
+                    title: 32-Bit Cafe Joins the Fediverse!
+                    slug: 32-bit-cafe-joins-the-fediverse
+                    posts_count: 28
+                    reply_count: 16
+                    category_id: 5
+                    tags: []
+                  categories: []
+                  grouped_search_result:
+                    more_full_page_results: true
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: url
+        in: query
+        required: true
+        description: The full URL of the Discourse forum to search.
+        schema:
+          type: string
+          minLength: 1
+          format: uri
+        example: https://discourse.32bit.cafe
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to
+          send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+          pattern: ^[1-9][0-9]*$
+        example: '2'
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchDiscourseWithPost
+      tags:
+      - discourse
+      summary: Search a Discourse forum
+      description: Search posts in one public Discourse forum by URL and keyword, newest first, and return normalized post
+        and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscourseSearchResponse'
+              example:
+                success: true
+                platform: discourse
+                endpoint: /api/v1/discourse/search
+                data:
+                  items:
+                  - id: discourse.32bit.cafe:8057
+                    platform: discourse
+                    url: https://discourse.32bit.cafe/t/32-bit-cafe-joins-the-fediverse/1173/1
+                    content:
+                      title: 32-Bit Cafe Joins the Fediverse!
+                      text: The 32-Bit Cafe is joining the fediverse with its own Pixelfed instance.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: xandra
+                      username: xandra
+                      display_name: xandra
+                      avatar_url: https://discourse.32bit.cafe/user_avatar/discourse.32bit.cafe/xandra/96/5075_2.png
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 17
+                      comments: null
+                      shares: null
+                      saves: null
+                    published_at: '2024-08-06T20:20:28.409Z'
+                    ext:
+                      forum_url: https://discourse.32bit.cafe
+                      author_url: https://discourse.32bit.cafe/u/xandra
+                      topic_id: 1173
+                      topic_slug: 32-bit-cafe-joins-the-fediverse
+                      post_number: 1
+                      category_id: 5
+                      category_name: null
+                      category_slug: null
+                      topic_posts_count: 28
+                      topic_reply_count: 16
+                      tags: []
+                pagination:
+                  next_cursor: '2'
+                  has_more: true
+                  page_size: 1
+                raw:
+                  posts:
+                  - id: 8057
+                    username: xandra
+                    avatar_template: /user_avatar/discourse.32bit.cafe/xandra/{size}/5075_2.png
+                    created_at: '2024-08-06T20:20:28.409Z'
+                    like_count: 17
+                    blurb: The 32-Bit Cafe is joining the fediverse with its own Pixelfed instance.
+                    post_number: 1
+                    topic_id: 1173
+                  topics:
+                  - id: 1173
+                    title: 32-Bit Cafe Joins the Fediverse!
+                    slug: 32-bit-cafe-joins-the-fediverse
+                    posts_count: 28
+                    reply_count: 16
+                    category_id: 5
+                    tags: []
+                  categories: []
+                  grouped_search_result:
+                    more_full_page_results: true
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              - query
+              properties:
+                url:
+                  type: string
+                  minLength: 1
+                  format: uri
+                  description: The full URL of the Discourse forum to search.
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to
+                    false to send the query unchanged.
+                cursor:
+                  type: string
+                  minLength: 1
+                  pattern: ^[1-9][0-9]*$
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              url: https://discourse.32bit.cafe
+              query: social listening
+              exact: true
+              cursor: '2'
+              raw: true
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Your SocialListeningAPI key.
+  parameters:
+    SearchQuery:
+      name: query
+      in: query
+      required: true
+      description: The keyword or phrase to search for.
+      schema:
+        type: string
+        minLength: 1
+      example: social listening
+    ExactSearch:
+      name: exact
+      in: query
+      required: false
+      description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to send
+        the query unchanged.
+      schema:
+        type: boolean
+        default: true
+      example: true
+  requestBodies:
+    SearchRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchRequest'
+          example:
+            query: social listening
+            exact: true
+            raw: true
+  headers:
+    CacheControl:
+      description: Browser and shared-cache instructions for the OpenAPI document.
+      schema:
+        type: string
+    ETag:
+      description: A validator for detecting changes to the OpenAPI document.
+      schema:
+        type: string
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
+    RateLimitLimit:
+      description: The maximum requests allowed in the current minute.
+      schema:
+        type: integer
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
+    RetryAfter:
+      description: The seconds until another request can be attempted.
+      schema:
+        type: integer
+  schemas:
+    SearchRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          minLength: 1
+          description: The keyword or phrase to search for.
+          example: social listening
+        exact:
+          type: boolean
+          default: true
+          description: Search for the exact phrase by wrapping the query in double quotes. Set to false to send the query
+            unchanged.
+          example: true
+        raw:
+          type: boolean
+          default: false
+          description: Include the unchanged provider response in the raw field.
+          example: true
+      additionalProperties: false
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    Content:
+      type: object
+      required:
+      - title
+      - text
+      - media_urls
+      - thumbnail_url
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        media_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        thumbnail_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+      additionalProperties: false
+    Author:
+      type: object
+      required:
+      - id
+      - username
+      - display_name
+      - avatar_url
+      - verified
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        verified:
+          type:
+          - boolean
+          - 'null'
+      additionalProperties: false
+    Profile:
+      type: object
+      required:
+      - id
+      - platform
+      - username
+      - display_name
+      - avatar_url
+      - bio
+      - verified
+      - followers
+      - following
+      - posts_count
+      - likes_count
+      - url
+      - location
+      - external_url
+      - private
+      - joined_at
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - instagram
+        username:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        bio:
+          type:
+          - string
+          - 'null'
+        verified:
+          type:
+          - boolean
+          - 'null'
+        followers:
+          type:
+          - integer
+          - 'null'
+        following:
+          type:
+          - integer
+          - 'null'
+        posts_count:
+          type:
+          - integer
+          - 'null'
+        likes_count:
+          type:
+          - integer
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        location:
+          type:
+          - string
+          - 'null'
+        external_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        private:
+          type:
+          - boolean
+          - 'null'
+        joined_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized profile fields.
+          additionalProperties: true
+      additionalProperties: false
+    Engagement:
+      type: object
+      required:
+      - views
+      - likes
+      - comments
+      - shares
+      - saves
+      properties:
+        views:
+          type:
+          - integer
+          - 'null'
+        likes:
+          type:
+          - integer
+          - 'null'
+        comments:
+          type:
+          - integer
+          - 'null'
+        shares:
+          type:
+          - integer
+          - 'null'
+        saves:
+          type:
+          - integer
+          - 'null'
+      additionalProperties: false
+    SocialPost:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - content
+      - author
+      - engagement
+      - published_at
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        content:
+          $ref: '#/components/schemas/Content'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/Engagement'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized fields.
+          additionalProperties: true
+      additionalProperties: false
+    GoogleResult:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - title
+      - description
+      - published_at
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: google
+        url:
+          type: string
+          format: uri
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    DiscoveryResult:
+      type: object
+      required:
+      - id
+      - platform
+      - type
+      - name
+      - username
+      - url
+      - image_url
+      - verified
+      - count
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: instagram
+        type:
+          type: string
+          enum:
+          - user
+          - hashtag
+          - place
+        name:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        image_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        verified:
+          type:
+          - boolean
+          - 'null'
+        count:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        ext:
+          type: object
+          description: Platform-specific normalized discovery fields.
+          additionalProperties: true
+      additionalProperties: false
+    SocialSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialPost'
+      additionalProperties: false
+    DiscoverySearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryResult'
+      additionalProperties: false
+    CommentEngagement:
+      type: object
+      required:
+      - likes
+      - replies
+      properties:
+        likes:
+          type:
+          - integer
+          - 'null'
+        replies:
+          type:
+          - integer
+          - 'null'
+      additionalProperties: false
+    CommentFlags:
+      type: object
+      required:
+      - pinned
+      - deleted
+      properties:
+        pinned:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type: boolean
+      additionalProperties: false
+    Comment:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - parent_id
+      - post_id
+      - text
+      - author
+      - engagement
+      - flags
+      - published_at
+      - ext
+      - replies
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: reddit
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        parent_id:
+          type:
+          - string
+          - 'null'
+        post_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/CommentEngagement'
+        flags:
+          $ref: '#/components/schemas/CommentFlags'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized comment fields.
+          additionalProperties: true
+        replies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      additionalProperties: false
+    CommentSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      additionalProperties: false
+    GoogleSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleResult'
+      additionalProperties: false
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    SocialSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/SocialSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    DiscoverySearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: instagram
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/DiscoverySearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    ProfileResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - instagram
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/Profile'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    CommentSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: reddit
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/CommentSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    GoogleSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: google
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/GoogleSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    DiscourseSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: discourse
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/SocialSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
+  responses:
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidQuery:
+      description: The search query is missing or empty.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_QUERY
+              message: The query parameter is required
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidApiKey:
+      description: The API key is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_API_KEY
+              message: The API key is invalid
+              status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    EndpointNotFound:
+      description: The requested API route does not exist.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: ENDPOINT_NOT_FOUND
+              message: Route not found
+              status: 404
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    RateLimited:
+      description: The API key exceeded the rate limit.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InternalError:
+      description: The request could not be completed because of an internal error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+externalDocs:
+  description: SocialListeningAPI documentation
+  url: https://sociallisteningapi.com/docs/introduction

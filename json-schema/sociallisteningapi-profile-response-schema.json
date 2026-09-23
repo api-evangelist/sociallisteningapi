@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sociallisteningapi/main/json-schema/sociallisteningapi-profile-response-schema.json",
+  "title": "ProfileResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/sociallisteningapi-openapi.yml#/components/schemas/ProfileResponse",
+  "type": "object",
+  "required": [
+    "success",
+    "platform",
+    "endpoint",
+    "data",
+    "pagination",
+    "request_id",
+    "credits_used",
+    "credits_remaining"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "linkedin",
+        "x",
+        "instagram"
+      ]
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "data": {
+      "$ref": "#/$defs/Profile"
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    },
+    "raw": {
+      "$ref": "#/$defs/RawResponse"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "credits_used": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "credits_remaining": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "next_cursor",
+        "has_more",
+        "page_size"
+      ],
+      "properties": {
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A provider cursor for a future paginated request, when available."
+        },
+        "has_more": {
+          "type": "boolean"
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "Profile": {
+      "type": "object",
+      "required": [
+        "id",
+        "platform",
+        "username",
+        "display_name",
+        "avatar_url",
+        "bio",
+        "verified",
+        "followers",
+        "following",
+        "posts_count",
+        "likes_count",
+        "url",
+        "location",
+        "external_url",
+        "private",
+        "joined_at",
+        "ext"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linkedin",
+            "x",
+            "instagram"
+          ]
+        },
+        "username": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "display_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "avatar_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "bio": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verified": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "followers": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "following": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "posts_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "likes_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "external_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "private": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "joined_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "ext": {
+          "type": "object",
+          "description": "Platform-specific normalized profile fields.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "RawResponse": {
+      "description": "The unchanged upstream provider response. Returned only when the request sets raw to true."
+    }
+  }
+}

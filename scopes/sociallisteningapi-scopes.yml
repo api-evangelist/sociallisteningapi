@@ -1,0 +1,13 @@
+generated: '2026-09-23'
+method: probed
+source: https://api.sociallisteningapi.com/.well-known/oauth-protected-resource/mcp (HTTP 200) and /.well-known/oauth-authorization-server
+  (HTTP 200); WWW-Authenticate on POST /mcp names scope="mcp"
+docs: https://sociallisteningapi.com/mcp
+applies_to: Remote MCP server (the REST API uses an x-api-key header, no scopes)
+scopes:
+- name: mcp
+  description: Scope advertised in scopes_supported and requested in the WWW-Authenticate challenge of the MCP endpoint
+    (no published description).
+- name: mcp:search
+  description: Scope advertised in scopes_supported of the MCP protected-resource and authorization-server metadata
+    (no published description).

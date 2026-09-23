@@ -1,0 +1,62 @@
+generated: '2026-09-23'
+method: searched
+source: https://sociallisteningapi.com/docs/introduction (Response rules) and https://api.sociallisteningapi.com/openapi.json
+  components.responses
+format: custom-json
+envelope:
+  shape: '{ "success": false, "error": { "type", "message", "status" }, "request_id", "credits_used", "credits_remaining"
+    }'
+  type_field: error.type
+  note: Errors use one shared shape. Failed requests do not use credits.
+problems:
+- status: 400
+  title: A required request parameter is missing or invalid
+  type: INVALID_REQUEST
+  description: A required request parameter is missing or invalid
+  remediation: Fix the missing or invalid parameter and retry.
+- status: 400
+  title: The query parameter is required
+  type: INVALID_QUERY
+  description: The query parameter is required
+  remediation: Send a non-empty query.
+- status: 401
+  title: The API key is invalid
+  type: INVALID_API_KEY
+  description: The API key is invalid
+  remediation: Send a valid key (prefix slapi_) in the x-api-key header. A missing key returns MISSING_API_KEY (observed
+    live).
+- status: 402
+  title: The workspace does not have enough API credits
+  type: INSUFFICIENT_CREDITS
+  description: The workspace does not have enough API credits
+  remediation: Buy another credit pack to continue making paid API calls.
+- status: 403
+  title: The workspace email must be activated
+  type: WORKSPACE_NOT_ACTIVATED
+  description: The workspace email must be activated
+  remediation: Activate the account from the email sent at signup.
+- status: 404
+  title: Route not found
+  type: ENDPOINT_NOT_FOUND
+  description: Route not found
+  remediation: Check the path against the OpenAPI document.
+- status: 429
+  title: The API key has reached 120 requests per minute
+  type: RATE_LIMITED
+  description: The API key has reached 120 requests per minute
+  remediation: Wait for Retry-After seconds / X-RateLimit-Reset before retrying.
+- status: 500
+  title: Internal server error
+  type: INTERNAL_ERROR
+  description: Internal server error
+  remediation: Retry later; share request_id with support.
+- status: 502
+  title: The upstream provider request failed
+  type: UPSTREAM_PROVIDER_ERROR
+  description: The upstream provider request failed
+  remediation: Retry later; the source platform request failed or returned an invalid response.
+- status: 401
+  title: The x-api-key header is required
+  type: MISSING_API_KEY
+  description: Observed live on GET /api/v1/x/search without a key (2026-09-23); not listed in the OpenAPI.
+  remediation: Send the x-api-key header.

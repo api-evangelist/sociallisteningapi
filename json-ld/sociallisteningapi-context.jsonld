@@ -1,0 +1,271 @@
+{
+  "@context": {
+    "@vocab": "https://sociallisteningapi.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "sociallisteningapi": "https://sociallisteningapi.com/schema#",
+    "SearchRequest": "sociallisteningapi:SearchRequest",
+    "query": {
+      "@id": "sociallisteningapi:query",
+      "@type": "xsd:string"
+    },
+    "exact": {
+      "@id": "sociallisteningapi:exact",
+      "@type": "xsd:boolean"
+    },
+    "raw": {
+      "@id": "sociallisteningapi:raw",
+      "@type": "xsd:boolean"
+    },
+    "Pagination": "sociallisteningapi:Pagination",
+    "next_cursor": {
+      "@id": "sociallisteningapi:next_cursor",
+      "@type": "xsd:string"
+    },
+    "has_more": {
+      "@id": "sociallisteningapi:has_more",
+      "@type": "xsd:boolean"
+    },
+    "page_size": {
+      "@id": "sociallisteningapi:page_size",
+      "@type": "xsd:integer"
+    },
+    "Content": "sociallisteningapi:Content",
+    "title": {
+      "@id": "sociallisteningapi:title",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "sociallisteningapi:text",
+      "@type": "xsd:string"
+    },
+    "media_urls": {
+      "@id": "sociallisteningapi:media_urls",
+      "@container": "@list"
+    },
+    "thumbnail_url": {
+      "@id": "sociallisteningapi:thumbnail_url",
+      "@type": "@id"
+    },
+    "Author": "sociallisteningapi:Author",
+    "id": {
+      "@id": "sociallisteningapi:id",
+      "@type": "xsd:string"
+    },
+    "username": {
+      "@id": "sociallisteningapi:username",
+      "@type": "xsd:string"
+    },
+    "display_name": {
+      "@id": "sociallisteningapi:display_name",
+      "@type": "xsd:string"
+    },
+    "avatar_url": {
+      "@id": "sociallisteningapi:avatar_url",
+      "@type": "@id"
+    },
+    "verified": {
+      "@id": "sociallisteningapi:verified",
+      "@type": "xsd:boolean"
+    },
+    "Profile": "sociallisteningapi:Profile",
+    "platform": {
+      "@id": "sociallisteningapi:platform",
+      "@type": "xsd:string"
+    },
+    "bio": {
+      "@id": "sociallisteningapi:bio",
+      "@type": "xsd:string"
+    },
+    "followers": {
+      "@id": "sociallisteningapi:followers",
+      "@type": "xsd:integer"
+    },
+    "following": {
+      "@id": "sociallisteningapi:following",
+      "@type": "xsd:integer"
+    },
+    "posts_count": {
+      "@id": "sociallisteningapi:posts_count",
+      "@type": "xsd:integer"
+    },
+    "likes_count": {
+      "@id": "sociallisteningapi:likes_count",
+      "@type": "xsd:integer"
+    },
+    "url": {
+      "@id": "sociallisteningapi:url",
+      "@type": "@id"
+    },
+    "location": {
+      "@id": "sociallisteningapi:location",
+      "@type": "xsd:string"
+    },
+    "external_url": {
+      "@id": "sociallisteningapi:external_url",
+      "@type": "@id"
+    },
+    "private": {
+      "@id": "sociallisteningapi:private",
+      "@type": "xsd:boolean"
+    },
+    "joined_at": {
+      "@id": "sociallisteningapi:joined_at",
+      "@type": "xsd:dateTime"
+    },
+    "ext": {
+      "@id": "sociallisteningapi:ext"
+    },
+    "Engagement": "sociallisteningapi:Engagement",
+    "views": {
+      "@id": "sociallisteningapi:views",
+      "@type": "xsd:integer"
+    },
+    "likes": {
+      "@id": "sociallisteningapi:likes",
+      "@type": "xsd:integer"
+    },
+    "comments": {
+      "@id": "sociallisteningapi:comments",
+      "@type": "xsd:integer"
+    },
+    "shares": {
+      "@id": "sociallisteningapi:shares",
+      "@type": "xsd:integer"
+    },
+    "saves": {
+      "@id": "sociallisteningapi:saves",
+      "@type": "xsd:integer"
+    },
+    "SocialPost": "sociallisteningapi:SocialPost",
+    "content": {
+      "@id": "sociallisteningapi:content",
+      "@type": "@id"
+    },
+    "author": {
+      "@id": "sociallisteningapi:author",
+      "@type": "@id"
+    },
+    "engagement": {
+      "@id": "sociallisteningapi:engagement",
+      "@type": "@id"
+    },
+    "published_at": {
+      "@id": "sociallisteningapi:published_at",
+      "@type": "xsd:dateTime"
+    },
+    "GoogleResult": "sociallisteningapi:GoogleResult",
+    "description": {
+      "@id": "sociallisteningapi:description",
+      "@type": "xsd:string"
+    },
+    "DiscoveryResult": "sociallisteningapi:DiscoveryResult",
+    "type": {
+      "@id": "sociallisteningapi:type",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "sociallisteningapi:name",
+      "@type": "xsd:string"
+    },
+    "image_url": {
+      "@id": "sociallisteningapi:image_url",
+      "@type": "@id"
+    },
+    "count": {
+      "@id": "sociallisteningapi:count",
+      "@type": "xsd:integer"
+    },
+    "SocialSearchData": "sociallisteningapi:SocialSearchData",
+    "items": {
+      "@id": "sociallisteningapi:items",
+      "@container": "@list"
+    },
+    "DiscoverySearchData": "sociallisteningapi:DiscoverySearchData",
+    "CommentEngagement": "sociallisteningapi:CommentEngagement",
+    "replies": {
+      "@id": "sociallisteningapi:replies",
+      "@type": "xsd:integer"
+    },
+    "CommentFlags": "sociallisteningapi:CommentFlags",
+    "pinned": {
+      "@id": "sociallisteningapi:pinned",
+      "@type": "xsd:boolean"
+    },
+    "deleted": {
+      "@id": "sociallisteningapi:deleted",
+      "@type": "xsd:boolean"
+    },
+    "Comment": "sociallisteningapi:Comment",
+    "parent_id": {
+      "@id": "sociallisteningapi:parent_id",
+      "@type": "xsd:string"
+    },
+    "post_id": {
+      "@id": "sociallisteningapi:post_id",
+      "@type": "xsd:string"
+    },
+    "flags": {
+      "@id": "sociallisteningapi:flags",
+      "@type": "@id"
+    },
+    "CommentSearchData": "sociallisteningapi:CommentSearchData",
+    "GoogleSearchData": "sociallisteningapi:GoogleSearchData",
+    "SocialSearchResponse": "sociallisteningapi:SocialSearchResponse",
+    "success": {
+      "@id": "sociallisteningapi:success",
+      "@type": "xsd:boolean"
+    },
+    "endpoint": {
+      "@id": "sociallisteningapi:endpoint",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "sociallisteningapi:data",
+      "@type": "@id"
+    },
+    "pagination": {
+      "@id": "sociallisteningapi:pagination",
+      "@type": "@id"
+    },
+    "request_id": {
+      "@id": "sociallisteningapi:request_id",
+      "@type": "xsd:string"
+    },
+    "credits_used": {
+      "@id": "sociallisteningapi:credits_used",
+      "@type": "xsd:integer"
+    },
+    "credits_remaining": {
+      "@id": "sociallisteningapi:credits_remaining",
+      "@type": "xsd:integer"
+    },
+    "DiscoverySearchResponse": "sociallisteningapi:DiscoverySearchResponse",
+    "ProfileResponse": "sociallisteningapi:ProfileResponse",
+    "CommentSearchResponse": "sociallisteningapi:CommentSearchResponse",
+    "GoogleSearchResponse": "sociallisteningapi:GoogleSearchResponse",
+    "DiscourseSearchResponse": "sociallisteningapi:DiscourseSearchResponse",
+    "Error": "sociallisteningapi:Error",
+    "message": {
+      "@id": "sociallisteningapi:message",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "sociallisteningapi:status",
+      "@type": "xsd:integer"
+    },
+    "ErrorResponse": "sociallisteningapi:ErrorResponse",
+    "error": {
+      "@id": "sociallisteningapi:error",
+      "@type": "@id"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "SocialListeningAPI API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects SocialListeningAPI's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-23) from openapi/sociallisteningapi-openapi.yml.",
+  "dcterms:created": "2026-09-23",
+  "dcterms:source": [
+    "openapi/sociallisteningapi-openapi.yml"
+  ]
+}

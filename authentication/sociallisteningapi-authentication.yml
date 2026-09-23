@@ -1,0 +1,51 @@
+generated: '2026-09-23'
+method: searched
+source: https://sociallisteningapi.com/docs/authentication
+docs: https://sociallisteningapi.com/docs/authentication
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: Your SocialListeningAPI key.
+  key_prefix: slapi_
+  applies_to: REST API (https://api.sociallisteningapi.com/api/v1/*)
+  obtain: Create an account, activate it from the email, then copy the key from the dashboard or Settings > API
+    key.
+  errors:
+    '401': A missing or invalid key returns 401.
+    '403': An account that has not been activated returns 403.
+    '402': If the workspace has no credits left, the API returns 402.
+  guidance: Do not put it in the URL. Keep it out of browser code, mobile apps, public repositories, screenshots,
+    and logs. Call SocialListeningAPI from your server so the key stays private.
+  sources:
+  - openapi/sociallisteningapi-openapi.yml
+  - https://sociallisteningapi.com/docs/authentication
+- name: MCP OAuth
+  type: oauth2
+  applies_to: Remote MCP server https://api.sociallisteningapi.com/mcp
+  flows:
+    authorizationCode:
+      authorizationUrl: https://api.sociallisteningapi.com/authorize
+      tokenUrl: https://api.sociallisteningapi.com/token
+      revocationUrl: https://api.sociallisteningapi.com/revoke
+      pkce: S256
+      scopes:
+      - mcp
+      - mcp:search
+  grant_types:
+  - authorization_code
+  - refresh_token
+  token_endpoint_auth_methods:
+  - none
+  bearer_methods:
+  - header
+  sources:
+  - https://api.sociallisteningapi.com/.well-known/oauth-authorization-server (200)
+  - https://api.sociallisteningapi.com/.well-known/oauth-protected-resource/mcp (200)

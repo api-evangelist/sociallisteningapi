@@ -1,0 +1,197 @@
+generated: '2026-09-23'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/sociallisteningapi-openapi.yml
+vocabulary:
+  name: SocialListeningAPI Domain Vocabulary
+  description: 'Terms declared by SocialListeningAPI''s own API contract: its resource groups, objects and enumerations, with the contract''s
+    definitions. Derived, not authored.'
+  version: '2026-09-23'
+  terms:
+  - term: meta
+    definition: API discovery endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: instagram
+    definition: Instagram API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: linkedin
+    definition: LinkedIn API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: x
+    definition: X API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: reddit
+    definition: Reddit API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: facebook
+    definition: Facebook API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: hackernews
+    definition: Hacker News API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: tiktok
+    definition: TikTok API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: youtube
+    definition: YouTube API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: pinterest
+    definition: Pinterest API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: google
+    definition: Google API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: discourse
+    definition: Discourse API endpoints.
+    tags:
+    - Resource Group
+    source: openapi/sociallisteningapi-openapi.yml
+  - term: SearchRequest
+    definition: 'Object declared by the contract with fields: query, exact, raw.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/SearchRequest
+  - term: Pagination
+    definition: 'Object declared by the contract with fields: next_cursor, has_more, page_size.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Pagination
+  - term: Content
+    definition: 'Object declared by the contract with fields: title, text, media_urls, thumbnail_url.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Content
+  - term: Author
+    definition: 'Object declared by the contract with fields: id, username, display_name, avatar_url, verified.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Author
+  - term: Profile
+    definition: 'Object declared by the contract with fields: id, platform, username, display_name, avatar_url, bio, verified, followers, following,
+      posts_count, likes_count, url. (5 more)'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Profile
+  - term: Engagement
+    definition: 'Object declared by the contract with fields: views, likes, comments, shares, saves.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Engagement
+  - term: SocialPost
+    definition: 'Object declared by the contract with fields: id, platform, url, content, author, engagement, published_at, ext.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/SocialPost
+  - term: GoogleResult
+    definition: 'Object declared by the contract with fields: id, platform, url, title, description, published_at.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/GoogleResult
+  - term: DiscoveryResult
+    definition: 'Object declared by the contract with fields: id, platform, type, name, username, url, image_url, verified, count, ext.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/DiscoveryResult
+  - term: SocialSearchData
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/SocialSearchData
+  - term: DiscoverySearchData
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/DiscoverySearchData
+  - term: CommentEngagement
+    definition: 'Object declared by the contract with fields: likes, replies.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/CommentEngagement
+  - term: CommentFlags
+    definition: 'Object declared by the contract with fields: pinned, deleted.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/CommentFlags
+  - term: Comment
+    definition: 'Object declared by the contract with fields: id, platform, url, parent_id, post_id, text, author, engagement, flags, published_at,
+      ext, replies.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Comment
+  - term: CommentSearchData
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/CommentSearchData
+  - term: GoogleSearchData
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/GoogleSearchData
+  - term: RawResponse
+    definition: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/RawResponse
+  - term: SocialSearchResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/SocialSearchResponse
+  - term: DiscoverySearchResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/DiscoverySearchResponse
+  - term: ProfileResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/ProfileResponse
+  - term: CommentSearchResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/CommentSearchResponse
+  - term: GoogleSearchResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/GoogleSearchResponse
+  - term: DiscourseSearchResponse
+    definition: 'Object declared by the contract with fields: success, platform, endpoint, data, pagination, raw, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/DiscourseSearchResponse
+  - term: Error
+    definition: 'Object declared by the contract with fields: type, message, status.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/Error
+  - term: ErrorResponse
+    definition: 'Object declared by the contract with fields: success, error, request_id, credits_used, credits_remaining.'
+    tags:
+    - Object
+    source: openapi/sociallisteningapi-openapi.yml#/components/schemas/ErrorResponse

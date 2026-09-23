@@ -1,0 +1,16 @@
+generated: '2026-09-23'
+method: derived
+source: openapi/sociallisteningapi-openapi.yml; docs index https://sociallisteningapi.com/llms.txt
+versioning:
+  scheme: path (/api/v1)
+  spec_version: 1.0.0
+  spec_updated: '2026-09-23'
+  policy: null
+  note: No versioning policy page is published.
+deprecation:
+  policy: null
+  headers: null
+  note: No deprecation policy, Sunset or Deprecation headers documented; no operation in the OpenAPI is marked deprecated.
+sla: null
+status_page: null
+deprecated_operations: []

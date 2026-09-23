@@ -1,0 +1,64 @@
+generated: '2026-09-23'
+method: searched
+source: https://sociallisteningapi.com/pricing
+name: SocialListeningAPI Credit Packs
+audience: developer-api
+pricing_basis: usage-other
+published: true
+currency: USD
+delivery:
+  delivery: managed
+description: Pay once and use your credits across every API endpoint. Your credits do not expire, and there is no
+  recurring subscription.
+plans:
+- name: Free signup credits
+  description: You get 100 free credits after you sign up. This is a one-time credit for new accounts and does not
+    renew.
+  price: 0
+  price_text: 100 free credits
+  features:
+  - One-time credit for new accounts
+  limits:
+  - 100 credits, one-time
+- name: Starter
+  description: A simple pack for testing the API and smaller projects.
+  price: 20
+  price_text: $ 20 one time
+  billing_period: one-time
+  included_quota: 5,000 credits
+  unit_price_text: $0.0040 per credit
+  features:
+  - Use credits across every API endpoint
+  - Credits never expire
+  limits:
+  - 5,000 credits
+- name: Growth
+  description: More credits at a lower cost for apps making regular calls.
+  price: 100
+  price_text: $ 100 one time
+  billing_period: one-time
+  included_quota: 40,000 credits
+  unit_price_text: $0.0025 per credit
+  features:
+  - Use credits across every API endpoint
+  - Credits never expire
+  - Best value
+  limits:
+  - 40,000 credits
+metering:
+  unit: credit
+  costs:
+  - endpoint: /api/v1/facebook/search
+    credits: 7
+  - endpoint: LinkedIn requests (/api/v1/linkedin/*)
+    credits: 2
+  - endpoint: /api/v1/reddit/search-comments
+    credits: 2
+  - endpoint: other successful paid requests
+    credits: 1
+  rules:
+  - Failed requests use no credits.
+  - Empty results use credits.
+  - Out of credits returns 402 Payment Required.
+  source: https://sociallisteningapi.com/docs/introduction; per-operation x-credit-cost in openapi/sociallisteningapi-openapi.yml
+plan_count: 3
