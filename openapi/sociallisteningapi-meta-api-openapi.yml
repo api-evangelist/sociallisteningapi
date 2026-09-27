@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: Sociallisteningapi Meta API
+  version: 1.0.0
+  x-updated-at: '2026-09-23T00:00:00.000Z'
+  description: 'Operations tagged meta across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.sociallisteningapi.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Meta
+  description: API discovery endpoints.
+  x-display-name: API reference
+paths:
+  /openapi.json:
+    get:
+      operationId: getOpenApiDocument
+      tags:
+      - Meta
+      summary: Get the OpenAPI document
+      description: Download the current OpenAPI 3.1 contract for SocialListeningAPI endpoints, parameters, schemas, responses, and authentication.
+      security: []
+      responses:
+        '200':
+          description: The OpenAPI document.
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                openapi: 3.1.0
+                info:
+                  title: SocialListeningAPI
+                paths:
+                  /api/v1/linkedin/search: {}
+    servers:
+    - url: https://api.sociallisteningapi.com
+      description: Production
+components:
+  headers:
+    CacheControl:
+      description: Browser and shared-cache instructions for the OpenAPI document.
+      schema:
+        type: string
+    ETag:
+      description: A validator for detecting changes to the OpenAPI document.
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Your SocialListeningAPI key.
+externalDocs:
+  description: SocialListeningAPI documentation
+  url: https://sociallisteningapi.com/docs/introduction
+x-refined-from:
+- sociallisteningapi-openapi.json
+- sociallisteningapi-openapi.yml

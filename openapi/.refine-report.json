@@ -1,0 +1,45 @@
+{
+  "provider": "sociallisteningapi",
+  "sources": [
+    "_original/sociallisteningapi-openapi.json",
+    "sociallisteningapi-openapi.yml"
+  ],
+  "outputs": [
+    "sociallisteningapi-discourse-api-openapi.yml",
+    "sociallisteningapi-facebook-api-openapi.yml",
+    "sociallisteningapi-google-api-openapi.yml",
+    "sociallisteningapi-hackernews-api-openapi.yml",
+    "sociallisteningapi-instagram-api-openapi.yml",
+    "sociallisteningapi-linkedin-api-openapi.yml",
+    "sociallisteningapi-meta-api-openapi.yml",
+    "sociallisteningapi-pinterest-api-openapi.yml",
+    "sociallisteningapi-reddit-api-openapi.yml",
+    "sociallisteningapi-tiktok-api-openapi.yml",
+    "sociallisteningapi-x-api-openapi.yml",
+    "sociallisteningapi-youtube-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/sociallisteningapi-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sociallisteningapi-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sociallisteningapi-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'discourse' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'facebook' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'google' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'hackernews' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'instagram' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'linkedin' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'meta' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'pinterest' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'reddit' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'tiktok' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'x' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "tag 'youtube' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+12 apis, 13 total)"
+  ],
+  "skipped": []
+}

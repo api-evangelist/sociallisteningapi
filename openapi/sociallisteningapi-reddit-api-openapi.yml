@@ -1,0 +1,1277 @@
+openapi: 3.2.0
+info:
+  title: Sociallisteningapi Reddit API
+  version: 1.0.0
+  x-updated-at: '2026-09-23T00:00:00.000Z'
+  description: 'Operations tagged reddit across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.sociallisteningapi.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Reddit
+  description: Reddit API endpoints.
+  x-display-name: Reddit
+  x-logo: /reddit.svg
+paths:
+  /api/v1/reddit/search-posts:
+    get:
+      operationId: searchRedditPosts
+      tags:
+      - Reddit
+      summary: Search Reddit posts
+      description: Search public Reddit posts by keyword, newest first, and return normalized post, subreddit, engagement, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-posts
+                data:
+                  items:
+                  - id: 1abc234
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    content:
+                      title: How are you using social listening?
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      permalink: /r/marketing/comments/1abc234/example/
+                      upvote_ratio: 0.94
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchRedditPostsWithPost
+      tags:
+      - Reddit
+      summary: Search Reddit posts
+      description: Search public Reddit posts by keyword, newest first, and return normalized post, subreddit, engagement, and source data.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-posts
+                data:
+                  items:
+                  - id: 1abc234
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    content:
+                      title: How are you using social listening?
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      views: 1200
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      permalink: /r/marketing/comments/1abc234/example/
+                      upvote_ratio: 0.94
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to send the query unchanged.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              cursor: DAABCgABHAY...
+              raw: true
+    servers:
+    - url: https://api.sociallisteningapi.com
+      description: Production
+  /api/v1/reddit/search-comments:
+    get:
+      operationId: searchRedditComments
+      tags:
+      - Reddit
+      summary: Search Reddit comments
+      description: Search public Reddit comments by keyword, newest first, and return normalized comment, subreddit, and source data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-comments
+                data:
+                  items:
+                  - id: https://www.reddit.com/r/marketing/comments/1abc234/example/#search-comment-1
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    parent_id: null
+                    post_id: null
+                    text: Social listening helped us find repeated customer questions.
+                    author:
+                      id: null
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      likes: 42
+                      replies: null
+                    flags:
+                      pinned: null
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      title: alex on marketing
+                      subreddit: marketing
+                      source: Reddit (Comment)
+                      domain: reddit.com
+                      type: comment
+                      post_upvotes: 1850
+                      post_comments: 274
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                  pages: 1
+                  count: 0
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: exact
+        in: query
+        required: false
+        description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to send the query unchanged.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchRedditCommentsWithPost
+      tags:
+      - Reddit
+      summary: Search Reddit comments
+      description: Search public Reddit comments by keyword, newest first, and return normalized comment, subreddit, and source data.
+      x-credit-cost: 2
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/search-comments
+                data:
+                  items:
+                  - id: https://www.reddit.com/r/marketing/comments/1abc234/example/#search-comment-1
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/
+                    parent_id: null
+                    post_id: null
+                    text: Social listening helped us find repeated customer questions.
+                    author:
+                      id: null
+                      username: alex
+                      display_name: alex
+                      avatar_url: null
+                      verified: null
+                    engagement:
+                      likes: 42
+                      replies: null
+                    flags:
+                      pinned: null
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      title: alex on marketing
+                      subreddit: marketing
+                      source: Reddit (Comment)
+                      domain: reddit.com
+                      type: comment
+                      post_upvotes: 1850
+                      post_comments: 274
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  posts: []
+                  pages: 1
+                  count: 0
+                request_id: req_example123
+                credits_used: 2
+                credits_remaining: 98
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                exact:
+                  type: boolean
+                  default: true
+                  description: Search for the exact phrase by wrapping the query in double quotes. Defaults to true. Set to false to send the query unchanged.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              exact: true
+              raw: true
+    servers:
+    - url: https://api.sociallisteningapi.com
+      description: Production
+  /api/v1/reddit/post/comments:
+    get:
+      operationId: getRedditPostComments
+      tags:
+      - Reddit
+      summary: Get Reddit post comments
+      description: Get public comments and nested replies from a Reddit post URL, with normalized comment data and pagination.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/post/comments
+                data:
+                  items:
+                  - id: comment_123
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/comment_123/
+                    parent_id: t3_1abc234
+                    post_id: 1abc234
+                    text: This worked well for us.
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      likes: 12
+                      replies: 0
+                    flags:
+                      pinned: false
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      replies_cursor: null
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  post:
+                    id: 1abc234
+                  comments: []
+                  more:
+                    has_more: false
+                    cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: url
+        in: query
+        required: true
+        description: The full Reddit post URL.
+        schema:
+          type: string
+          minLength: 1
+        example: https://www.reddit.com/r/AskReddit/comments/1lfbo7u/example/
+      - name: cursor
+        in: query
+        required: false
+        description: The cursor returned by the previous response.
+        schema:
+          type: string
+          minLength: 1
+        example: DAABCgABHAY...
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: getRedditPostCommentsWithPost
+      tags:
+      - Reddit
+      summary: Get Reddit post comments
+      description: Get public comments and nested replies from a Reddit post URL, with normalized comment data and pagination.
+      x-credit-cost: 1
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSearchResponse'
+              example:
+                success: true
+                platform: reddit
+                endpoint: /api/v1/reddit/post/comments
+                data:
+                  items:
+                  - id: comment_123
+                    platform: reddit
+                    url: https://www.reddit.com/r/marketing/comments/1abc234/example/comment_123/
+                    parent_id: t3_1abc234
+                    post_id: 1abc234
+                    text: This worked well for us.
+                    author:
+                      id: author_123
+                      username: alex
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: false
+                    engagement:
+                      likes: 12
+                      replies: 0
+                    flags:
+                      pinned: false
+                      deleted: false
+                    published_at: '2026-08-05T02:30:00.000Z'
+                    ext:
+                      subreddit: marketing
+                      replies_cursor: null
+                    replies: []
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  post:
+                    id: 1abc234
+                  comments: []
+                  more:
+                    has_more: false
+                    cursor: null
+                request_id: req_example123
+                credits_used: 1
+                credits_remaining: 99
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  minLength: 1
+                  description: The full Reddit post URL.
+                cursor:
+                  type: string
+                  minLength: 1
+                  description: The cursor returned by the previous response.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              url: https://www.reddit.com/r/AskReddit/comments/1lfbo7u/example/
+              cursor: DAABCgABHAY...
+              raw: true
+    servers:
+    - url: https://api.sociallisteningapi.com
+      description: Production
+components:
+  responses:
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidApiKey:
+      description: The API key is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_API_KEY
+              message: The API key is invalid
+              status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    RateLimited:
+      description: The API key exceeded the rate limit.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InternalError:
+      description: The request could not be completed because of an internal error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+  headers:
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RateLimitLimit:
+      description: The maximum requests allowed in the current minute.
+      schema:
+        type: integer
+    RetryAfter:
+      description: The seconds until another request can be attempted.
+      schema:
+        type: integer
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
+  schemas:
+    Content:
+      type: object
+      required:
+      - title
+      - text
+      - media_urls
+      - thumbnail_url
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        media_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        thumbnail_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+      additionalProperties: false
+    CommentSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: reddit
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/CommentSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    SocialPost:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - content
+      - author
+      - engagement
+      - published_at
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        content:
+          $ref: '#/components/schemas/Content'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/Engagement'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized fields.
+          additionalProperties: true
+      additionalProperties: false
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
+    Author:
+      type: object
+      required:
+      - id
+      - username
+      - display_name
+      - avatar_url
+      - verified
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        verified:
+          type:
+          - boolean
+          - 'null'
+      additionalProperties: false
+    SocialSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/SocialSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    CommentEngagement:
+      type: object
+      required:
+      - likes
+      - replies
+      properties:
+        likes:
+          type:
+          - integer
+          - 'null'
+        replies:
+          type:
+          - integer
+          - 'null'
+      additionalProperties: false
+    SocialSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialPost'
+      additionalProperties: false
+    Comment:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - parent_id
+      - post_id
+      - text
+      - author
+      - engagement
+      - flags
+      - published_at
+      - ext
+      - replies
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: reddit
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        parent_id:
+          type:
+          - string
+          - 'null'
+        post_id:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/CommentEngagement'
+        flags:
+          $ref: '#/components/schemas/CommentFlags'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized comment fields.
+          additionalProperties: true
+        replies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      additionalProperties: false
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    CommentSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      additionalProperties: false
+    Engagement:
+      type: object
+      required:
+      - views
+      - likes
+      - comments
+      - shares
+      - saves
+      properties:
+        views:
+          type:
+          - integer
+          - 'null'
+        likes:
+          type:
+          - integer
+          - 'null'
+        comments:
+          type:
+          - integer
+          - 'null'
+        shares:
+          type:
+          - integer
+          - 'null'
+        saves:
+          type:
+          - integer
+          - 'null'
+      additionalProperties: false
+    CommentFlags:
+      type: object
+      required:
+      - pinned
+      - deleted
+      properties:
+        pinned:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type: boolean
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Your SocialListeningAPI key.
+externalDocs:
+  description: SocialListeningAPI documentation
+  url: https://sociallisteningapi.com/docs/introduction
+x-refined-from:
+- sociallisteningapi-openapi.json
+- sociallisteningapi-openapi.yml

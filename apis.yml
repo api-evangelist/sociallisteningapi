@@ -110,24 +110,33 @@ common:
   url: https://sociallisteningapi.com/privacy
 
 apis:
-- aid: sociallisteningapi:sociallisteningapi
-  name: SocialListeningAPI
-  description: REST API that searches and retrieves public social data (LinkedIn, X, Reddit, Facebook, Hacker News, TikTok, YouTube, Pinterest,
-    Instagram, Google and Discourse) with a normalized response, cursor pagination and per-endpoint credit costs. Every path accepts GET with
-    query parameters or POST with a JSON body; requests authenticate with an x-api-key header (keys start with slapi_).
-  humanURL: https://sociallisteningapi.com/docs/introduction
-  baseURL: https://api.sociallisteningapi.com
+- aid: sociallisteningapi:sociallisteningapi-mcp
+  name: SocialListeningAPI MCP Server
+  description: >-
+    Hosted remote MCP server for Claude and ChatGPT that exposes the SocialListeningAPI search tools (all
+    sources except Discourse). Clients connect through OAuth 2.0 (authorization code + PKCE, scopes mcp
+    and mcp:search) and searches draw on the approved workspace's credits.
+  humanURL: https://sociallisteningapi.com/mcp
+  baseURL: https://api.sociallisteningapi.com/mcp
   image: https://sociallisteningapi.com/banner.jpg
   tags:
+  - MCP
   - Social Listening
-  - Social Media
-  - Search
+  properties:
+  - type: Documentation
+    url: https://sociallisteningapi.com/mcp
+  - type: GettingStarted
+    url: https://sociallisteningapi.com/docs/connect-claude-sociallisteningapi-mcp
+- aid: sociallisteningapi:sociallisteningapi-discourse-api
+  name: SocialListeningAPI Discourse API
+  description: Discourse API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - discourse
   properties:
   - type: OpenAPI
-    url: openapi/sociallisteningapi-openapi.yml
-  - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://api.sociallisteningapi.com/openapi.json
+    url: openapi/sociallisteningapi-discourse-api-openapi.yml
   - type: Documentation
     url: https://sociallisteningapi.com/docs/introduction
   - type: JSONSchema
@@ -142,21 +151,270 @@ apis:
     url: json-schema/sociallisteningapi-comment-search-response-schema.json
   - type: JSONSchema
     url: json-schema/sociallisteningapi-google-search-response-schema.json
-- aid: sociallisteningapi:sociallisteningapi-mcp
-  name: SocialListeningAPI MCP Server
-  description: Hosted remote MCP server for Claude and ChatGPT that exposes the SocialListeningAPI search tools (all sources except Discourse).
-    Clients connect through OAuth 2.0 (authorization code + PKCE, scopes mcp and mcp:search) and searches draw on the approved workspace's credits.
+- aid: sociallisteningapi:sociallisteningapi-facebook-api
+  name: SocialListeningAPI Facebook API
+  description: Facebook API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - facebook
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-facebook-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-google-api
+  name: SocialListeningAPI Google API
+  description: Google API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - google
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-google-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-instagram-api
+  name: SocialListeningAPI Instagram API
+  description: Instagram API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - instagram
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-instagram-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-meta-api
+  name: SocialListeningAPI Meta API
+  description: API discovery endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - meta
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-meta-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-pinterest-api
+  name: SocialListeningAPI Pinterest API
+  description: Pinterest API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - pinterest
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-pinterest-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-reddit-api
+  name: SocialListeningAPI Reddit API
+  description: Reddit API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - reddit
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-reddit-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-tiktok-api
+  name: SocialListeningAPI Tiktok API
+  description: TikTok API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - tiktok
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-tiktok-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-x-api
+  name: SocialListeningAPI X API
+  description: X API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - x
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-x-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-youtube-api
+  name: SocialListeningAPI YouTube API
+  description: YouTube API endpoints.
+  humanURL: https://sociallisteningapi.com/docs/introduction
+  baseURL: https://api.sociallisteningapi.com
+  tags:
+  - youtube
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-youtube-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-hacker-news-api
+  name: SocialListeningAPI Hacker News API
+  description: Hacker News API endpoints.
   humanURL: https://sociallisteningapi.com/mcp
   baseURL: https://api.sociallisteningapi.com/mcp
-  image: https://sociallisteningapi.com/banner.jpg
   tags:
-  - MCP
-  - Social Listening
+  - Hacker News
   properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-hacker-news-api-openapi.yml
   - type: Documentation
-    url: https://sociallisteningapi.com/mcp
-  - type: GettingStarted
-    url: https://sociallisteningapi.com/docs/connect-claude-sociallisteningapi-mcp
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
+- aid: sociallisteningapi:sociallisteningapi-linked-in-api
+  name: SocialListeningAPI Linked In API
+  description: LinkedIn API endpoints.
+  humanURL: https://sociallisteningapi.com/mcp
+  baseURL: https://api.sociallisteningapi.com/mcp
+  tags:
+  - Linked In
+  properties:
+  - type: OpenAPI
+    url: openapi/sociallisteningapi-linked-in-api-openapi.yml
+  - type: Documentation
+    url: https://sociallisteningapi.com/docs/introduction
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-social-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-profile-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discovery-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-discourse-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-comment-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/sociallisteningapi-google-search-response-schema.json
 x-enrichment:
   date: '2026-09-23'
   status: enriched

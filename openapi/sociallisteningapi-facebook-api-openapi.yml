@@ -1,0 +1,703 @@
+openapi: 3.2.0
+info:
+  title: Sociallisteningapi Facebook API
+  version: 1.0.0
+  x-updated-at: '2026-09-23T00:00:00.000Z'
+  description: 'Operations tagged facebook across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.sociallisteningapi.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Facebook
+  description: Facebook API endpoints.
+  x-display-name: Facebook
+  x-logo: /facebook.svg
+paths:
+  /api/v1/facebook/search:
+    get:
+      operationId: searchFacebook
+      tags:
+      - Facebook
+      summary: Search Facebook posts
+      description: Search public Facebook posts by keyword, newest first, and return normalized post and engagement data. Sentiment stays disabled.
+      x-credit-cost: 7
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: facebook
+                endpoint: /api/v1/facebook/search
+                data:
+                  items:
+                  - id: '122123115081122899'
+                    platform: facebook
+                    url: https://www.facebook.com/example/posts/122123115081122899
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: null
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.facebook.com/example
+                      external_url: null
+                      reactions:
+                        like: 35
+                        love: 10
+                        care: 3
+                        haha: 0
+                        wow: 0
+                        sad: 0
+                        angry: 0
+                      video: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  count: 1
+                  pages: 1
+                  posts: []
+                request_id: req_example123
+                credits_used: 7
+                credits_remaining: 93
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The keyword or phrase to search for.
+        schema:
+          type: string
+          minLength: 1
+        example: social listening
+      - name: raw
+        in: query
+        required: false
+        description: Include the unchanged provider response in the raw field. Defaults to false.
+        schema:
+          type: boolean
+          default: false
+        example: true
+    post:
+      operationId: searchFacebookWithPost
+      tags:
+      - Facebook
+      summary: Search Facebook posts
+      description: Search public Facebook posts by keyword, newest first, and return normalized post and engagement data. Sentiment stays disabled.
+      x-credit-cost: 7
+      responses:
+        '200':
+          description: Request completed successfully.
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialSearchResponse'
+              example:
+                success: true
+                platform: facebook
+                endpoint: /api/v1/facebook/search
+                data:
+                  items:
+                  - id: '122123115081122899'
+                    platform: facebook
+                    url: https://www.facebook.com/example/posts/122123115081122899
+                    content:
+                      title: null
+                      text: A practical guide to social listening for small teams.
+                      media_urls: []
+                      thumbnail_url: null
+                    author:
+                      id: author_123
+                      username: null
+                      display_name: Alex Morgan
+                      avatar_url: https://example.com/avatar.jpg
+                      verified: null
+                    engagement:
+                      views: null
+                      likes: 48
+                      comments: 7
+                      shares: 3
+                      saves: null
+                    published_at: '2026-08-05T01:30:00.000Z'
+                    ext:
+                      author_url: https://www.facebook.com/example
+                      external_url: null
+                      reactions:
+                        like: 35
+                        love: 10
+                        care: 3
+                        haha: 0
+                        wow: 0
+                        sad: 0
+                        angry: 0
+                      video: null
+                pagination:
+                  next_cursor: null
+                  has_more: false
+                  page_size: 1
+                raw:
+                  count: 1
+                  pages: 1
+                  posts: []
+                request_id: req_example123
+                credits_used: 7
+                credits_remaining: 93
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '403':
+          $ref: '#/components/responses/WorkspaceNotActivated'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '502':
+          $ref: '#/components/responses/UpstreamProviderError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  description: The keyword or phrase to search for.
+                raw:
+                  type: boolean
+                  default: false
+                  description: Include the unchanged provider response in the raw field. Defaults to false.
+              additionalProperties: false
+            example:
+              query: social listening
+              raw: true
+    servers:
+    - url: https://api.sociallisteningapi.com
+      description: Production
+components:
+  responses:
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidApiKey:
+      description: The API key is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_API_KEY
+              message: The API key is invalid
+              status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    RateLimited:
+      description: The API key exceeded the rate limit.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InternalError:
+      description: The request could not be completed because of an internal error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+  headers:
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RateLimitLimit:
+      description: The maximum requests allowed in the current minute.
+      schema:
+        type: integer
+    RetryAfter:
+      description: The seconds until another request can be attempted.
+      schema:
+        type: integer
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
+  schemas:
+    Content:
+      type: object
+      required:
+      - title
+      - text
+      - media_urls
+      - thumbnail_url
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        media_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        thumbnail_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+      additionalProperties: false
+    SocialPost:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - content
+      - author
+      - engagement
+      - published_at
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        content:
+          $ref: '#/components/schemas/Content'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/Engagement'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized fields.
+          additionalProperties: true
+      additionalProperties: false
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
+    Author:
+      type: object
+      required:
+      - id
+      - username
+      - display_name
+      - avatar_url
+      - verified
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        verified:
+          type:
+          - boolean
+          - 'null'
+      additionalProperties: false
+    SocialSearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/SocialSearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    SocialSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialPost'
+      additionalProperties: false
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    Engagement:
+      type: object
+      required:
+      - views
+      - likes
+      - comments
+      - shares
+      - saves
+      properties:
+        views:
+          type:
+          - integer
+          - 'null'
+        likes:
+          type:
+          - integer
+          - 'null'
+        comments:
+          type:
+          - integer
+          - 'null'
+        shares:
+          type:
+          - integer
+          - 'null'
+        saves:
+          type:
+          - integer
+          - 'null'
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Your SocialListeningAPI key.
+externalDocs:
+  description: SocialListeningAPI documentation
+  url: https://sociallisteningapi.com/docs/introduction
+x-refined-from:
+- sociallisteningapi-openapi.json
+- sociallisteningapi-openapi.yml
