@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Sociallisteningapi Meta API
+  title: SocialListening Meta API
   version: 1.0.0
+  description: Search and retrieve public social data through one normalized API.
   x-updated-at: '2026-09-23T00:00:00.000Z'
-  description: 'Operations tagged meta across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.sociallisteningapi.com
   description: Production
@@ -41,17 +41,14 @@ paths:
                   title: SocialListeningAPI
                 paths:
                   /api/v1/linkedin/search: {}
-    servers:
-    - url: https://api.sociallisteningapi.com
-      description: Production
 components:
   headers:
-    CacheControl:
-      description: Browser and shared-cache instructions for the OpenAPI document.
-      schema:
-        type: string
     ETag:
       description: A validator for detecting changes to the OpenAPI document.
+      schema:
+        type: string
+    CacheControl:
+      description: Browser and shared-cache instructions for the OpenAPI document.
       schema:
         type: string
   securitySchemes:
@@ -63,6 +60,3 @@ components:
 externalDocs:
   description: SocialListeningAPI documentation
   url: https://sociallisteningapi.com/docs/introduction
-x-refined-from:
-- sociallisteningapi-openapi.json
-- sociallisteningapi-openapi.yml

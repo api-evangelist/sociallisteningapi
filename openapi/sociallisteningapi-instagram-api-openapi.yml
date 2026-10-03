@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Sociallisteningapi Instagram API
+  title: SocialListening Instagram API
   version: 1.0.0
+  description: Search and retrieve public social data through one normalized API.
   x-updated-at: '2026-09-23T00:00:00.000Z'
-  description: 'Operations tagged instagram across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.sociallisteningapi.com
   description: Production
@@ -198,9 +198,6 @@ paths:
             example:
               query: social listening
               raw: true
-    servers:
-    - url: https://api.sociallisteningapi.com
-      description: Production
   /api/v1/instagram/profile:
     get:
       operationId: getInstagramProfile
@@ -402,11 +399,36 @@ paths:
             example:
               username: instagram
               raw: true
-    servers:
-    - url: https://api.sociallisteningapi.com
-      description: Production
 components:
   schemas:
+    DiscoverySearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryResult'
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+      additionalProperties: false
     DiscoveryResult:
       type: object
       required:
@@ -464,52 +486,6 @@ components:
           description: Platform-specific normalized discovery fields.
           additionalProperties: true
       additionalProperties: false
-    DiscoverySearchData:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryResult'
-      additionalProperties: false
-    Error:
-      type: object
-      required:
-      - type
-      - message
-      - status
-      properties:
-        type:
-          type: string
-          example: INVALID_REQUEST
-        message:
-          type: string
-          example: A required request parameter is missing or invalid
-        status:
-          type: integer
-          minimum: 400
-          maximum: 599
-      additionalProperties: false
-    Pagination:
-      type: object
-      required:
-      - next_cursor
-      - has_more
-      - page_size
-      properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: A provider cursor for a future paginated request, when available.
-        has_more:
-          type: boolean
-        page_size:
-          type: integer
-          minimum: 0
-      additionalProperties: false
     ErrorResponse:
       type: object
       required:
@@ -544,6 +520,87 @@ components:
         request_id: req_example123
         credits_used: 0
         credits_remaining: 100
+    DiscoverySearchResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          const: instagram
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/DiscoverySearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    ProfileResponse:
+      type: object
+      required:
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: true
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - instagram
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/Profile'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
+          type: integer
+          minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
     Profile:
       type: object
       required:
@@ -638,90 +695,27 @@ components:
           description: Platform-specific normalized profile fields.
           additionalProperties: true
       additionalProperties: false
-    RawResponse:
-      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
-    ProfileResponse:
+    Pagination:
       type: object
       required:
-      - success
-      - platform
-      - endpoint
-      - data
-      - pagination
-      - request_id
-      - credits_used
-      - credits_remaining
+      - next_cursor
+      - has_more
+      - page_size
       properties:
-        success:
-          type: boolean
-          const: true
-        platform:
-          type: string
-          enum:
-          - linkedin
-          - x
-          - instagram
-        endpoint:
-          type: string
-        data:
-          $ref: '#/components/schemas/Profile'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        raw:
-          $ref: '#/components/schemas/RawResponse'
-        request_id:
-          type: string
-          example: req_4QfL8rGv2NwK7zXp
-        credits_used:
-          type: integer
-          minimum: 0
-        credits_remaining:
+        next_cursor:
           type:
-          - integer
+          - string
           - 'null'
-          minimum: 0
-      additionalProperties: false
-    DiscoverySearchResponse:
-      type: object
-      required:
-      - success
-      - platform
-      - endpoint
-      - data
-      - pagination
-      - request_id
-      - credits_used
-      - credits_remaining
-      properties:
-        success:
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
           type: boolean
-          const: true
-        platform:
-          type: string
-          const: instagram
-        endpoint:
-          type: string
-        data:
-          $ref: '#/components/schemas/DiscoverySearchData'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        raw:
-          $ref: '#/components/schemas/RawResponse'
-        request_id:
-          type: string
-          example: req_4QfL8rGv2NwK7zXp
-        credits_used:
+        page_size:
           type: integer
-          minimum: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
           minimum: 0
       additionalProperties: false
   responses:
-    InsufficientCredits:
-      description: The workspace does not have enough credits.
+    InternalError:
+      description: The request could not be completed because of an internal error.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -738,33 +732,9 @@ components:
           example:
             success: false
             error:
-              type: INSUFFICIENT_CREDITS
-              message: The workspace does not have enough API credits
-              status: 402
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    WorkspaceNotActivated:
-      description: The workspace is not activated.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: WORKSPACE_NOT_ACTIVATED
-              message: The workspace email must be activated
-              status: 403
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -792,6 +762,30 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
     InvalidApiKey:
       description: The API key is missing or invalid.
       headers:
@@ -813,6 +807,30 @@ components:
               type: INVALID_API_KEY
               message: The API key is invalid
               status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -842,8 +860,8 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
-    InternalError:
-      description: The request could not be completed because of an internal error.
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -860,45 +878,25 @@ components:
           example:
             success: false
             error:
-              type: INTERNAL_ERROR
-              message: Internal server error
-              status: 500
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidRequest:
-      description: A required request parameter is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_REQUEST
-              message: A required request parameter is missing or invalid
-              status: 400
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
   headers:
-    RateLimitRemaining:
-      description: The requests remaining in the current minute.
-      schema:
-        type: integer
     RateLimitLimit:
       description: The maximum requests allowed in the current minute.
       schema:
         type: integer
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
     RetryAfter:
       description: The seconds until another request can be attempted.
       schema:
@@ -907,10 +905,6 @@ components:
       description: The Unix timestamp when the current rate-limit window resets.
       schema:
         type: integer
-    RequestId:
-      description: The unique ID assigned to the request.
-      schema:
-        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -920,6 +914,3 @@ components:
 externalDocs:
   description: SocialListeningAPI documentation
   url: https://sociallisteningapi.com/docs/introduction
-x-refined-from:
-- sociallisteningapi-openapi.json
-- sociallisteningapi-openapi.yml

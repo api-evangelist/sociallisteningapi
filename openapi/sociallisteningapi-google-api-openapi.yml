@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Sociallisteningapi Google API
+  title: SocialListening Google API
   version: 1.0.0
+  description: Search and retrieve public social data through one normalized API.
   x-updated-at: '2026-09-23T00:00:00.000Z'
-  description: 'Operations tagged google across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.sociallisteningapi.com
   description: Production
@@ -183,13 +183,10 @@ paths:
               query: social listening
               exact: true
               raw: true
-    servers:
-    - url: https://api.sociallisteningapi.com
-      description: Production
 components:
   responses:
-    InsufficientCredits:
-      description: The workspace does not have enough credits.
+    InternalError:
+      description: The request could not be completed because of an internal error.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -206,33 +203,9 @@ components:
           example:
             success: false
             error:
-              type: INSUFFICIENT_CREDITS
-              message: The workspace does not have enough API credits
-              status: 402
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    WorkspaceNotActivated:
-      description: The workspace is not activated.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: WORKSPACE_NOT_ACTIVATED
-              message: The workspace email must be activated
-              status: 403
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -260,6 +233,30 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
     InvalidApiKey:
       description: The API key is missing or invalid.
       headers:
@@ -281,6 +278,30 @@ components:
               type: INVALID_API_KEY
               message: The API key is invalid
               status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -310,8 +331,8 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
-    InternalError:
-      description: The request could not be completed because of an internal error.
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -328,45 +349,25 @@ components:
           example:
             success: false
             error:
-              type: INTERNAL_ERROR
-              message: Internal server error
-              status: 500
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidRequest:
-      description: A required request parameter is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_REQUEST
-              message: A required request parameter is missing or invalid
-              status: 400
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
   headers:
-    RateLimitRemaining:
-      description: The requests remaining in the current minute.
-      schema:
-        type: integer
     RateLimitLimit:
       description: The maximum requests allowed in the current minute.
       schema:
         type: integer
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
     RetryAfter:
       description: The seconds until another request can be attempted.
       schema:
@@ -375,10 +376,6 @@ components:
       description: The Unix timestamp when the current rate-limit window resets.
       schema:
         type: integer
-    RequestId:
-      description: The unique ID assigned to the request.
-      schema:
-        type: string
   schemas:
     Error:
       type: object
@@ -397,100 +394,6 @@ components:
           type: integer
           minimum: 400
           maximum: 599
-      additionalProperties: false
-    GoogleSearchData:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleResult'
-      additionalProperties: false
-    Pagination:
-      type: object
-      required:
-      - next_cursor
-      - has_more
-      - page_size
-      properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: A provider cursor for a future paginated request, when available.
-        has_more:
-          type: boolean
-        page_size:
-          type: integer
-          minimum: 0
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      required:
-      - success
-      - error
-      - request_id
-      - credits_used
-      - credits_remaining
-      properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          $ref: '#/components/schemas/Error'
-        request_id:
-          type: string
-        credits_used:
-          type: integer
-          const: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
-      additionalProperties: false
-      example:
-        success: false
-        error:
-          type: INVALID_REQUEST
-          message: A required request parameter is missing or invalid
-          status: 400
-        request_id: req_example123
-        credits_used: 0
-        credits_remaining: 100
-    GoogleResult:
-      type: object
-      required:
-      - id
-      - platform
-      - url
-      - title
-      - description
-      - published_at
-      properties:
-        id:
-          type: string
-        platform:
-          type: string
-          const: google
-        url:
-          type: string
-          format: uri
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        published_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
       additionalProperties: false
     GoogleSearchResponse:
       type: object
@@ -530,8 +433,102 @@ components:
           - 'null'
           minimum: 0
       additionalProperties: false
+    GoogleResult:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - title
+      - description
+      - published_at
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: google
+        url:
+          type: string
+          format: uri
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
     RawResponse:
       description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    GoogleSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleResult'
+      additionalProperties: false
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -541,6 +538,3 @@ components:
 externalDocs:
   description: SocialListeningAPI documentation
   url: https://sociallisteningapi.com/docs/introduction
-x-refined-from:
-- sociallisteningapi-openapi.json
-- sociallisteningapi-openapi.yml

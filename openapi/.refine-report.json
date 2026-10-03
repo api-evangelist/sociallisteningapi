@@ -1,8 +1,7 @@
 {
   "provider": "sociallisteningapi",
   "sources": [
-    "_original/sociallisteningapi-openapi.json",
-    "sociallisteningapi-openapi.yml"
+    "_original/sociallisteningapi-openapi.json"
   ],
   "outputs": [
     "sociallisteningapi-discourse-api-openapi.yml",
@@ -19,27 +18,30 @@
     "sociallisteningapi-youtube-api-openapi.yml"
   ],
   "archived": [
-    "archived openapi/sociallisteningapi-openapi.yml"
+    "deleted 2 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
   "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "sociallisteningapi-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "sociallisteningapi-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tag 'discourse' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'facebook' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'google' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'hackernews' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'instagram' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'linkedin' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'meta' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'pinterest' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'reddit' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'tiktok' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'x' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "tag 'youtube' spans 2 source specs (sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+12 apis, 13 total)"
+    "superseded outputs removed: sociallisteningapi-hacker-news-api-openapi.yml, sociallisteningapi-linked-in-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 13 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/sociallisteningapi-openapi.yml: archived document superseded by a larger archived document",
+    "sociallisteningapi-discourse-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-facebook-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-google-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-hacker-news-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-instagram-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-linked-in-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-meta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-pinterest-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-reddit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-tiktok-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-x-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sociallisteningapi-youtube-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Sociallisteningapi Hackernews API
+  title: SocialListening Hackernews API
   version: 1.0.0
+  description: Search and retrieve public social data through one normalized API.
   x-updated-at: '2026-09-23T00:00:00.000Z'
-  description: 'Operations tagged hackernews across 2 of this provider''s published API definitions: sociallisteningapi-openapi.json, sociallisteningapi-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.sociallisteningapi.com
   description: Production
@@ -219,347 +219,18 @@ paths:
               query: social listening
               cursor: '1'
               raw: true
-    servers:
-    - url: https://api.sociallisteningapi.com
-      description: Production
 components:
-  responses:
-    InsufficientCredits:
-      description: The workspace does not have enough credits.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INSUFFICIENT_CREDITS
-              message: The workspace does not have enough API credits
-              status: 402
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    WorkspaceNotActivated:
-      description: The workspace is not activated.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: WORKSPACE_NOT_ACTIVATED
-              message: The workspace email must be activated
-              status: 403
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    UpstreamProviderError:
-      description: The upstream provider request failed or returned an invalid response.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: UPSTREAM_PROVIDER_ERROR
-              message: The upstream provider request failed
-              status: 502
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidApiKey:
-      description: The API key is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_API_KEY
-              message: The API key is invalid
-              status: 401
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    RateLimited:
-      description: The API key exceeded the rate limit.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        Retry-After:
-          $ref: '#/components/headers/RetryAfter'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: RATE_LIMITED
-              message: The API key has reached 120 requests per minute
-              status: 429
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InternalError:
-      description: The request could not be completed because of an internal error.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INTERNAL_ERROR
-              message: Internal server error
-              status: 500
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidRequest:
-      description: A required request parameter is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_REQUEST
-              message: A required request parameter is missing or invalid
-              status: 400
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-  headers:
-    RateLimitRemaining:
-      description: The requests remaining in the current minute.
-      schema:
-        type: integer
-    RateLimitLimit:
-      description: The maximum requests allowed in the current minute.
-      schema:
-        type: integer
-    RetryAfter:
-      description: The seconds until another request can be attempted.
-      schema:
-        type: integer
-    RateLimitReset:
-      description: The Unix timestamp when the current rate-limit window resets.
-      schema:
-        type: integer
-    RequestId:
-      description: The unique ID assigned to the request.
-      schema:
-        type: string
   schemas:
-    Content:
+    SocialSearchData:
       type: object
       required:
-      - title
-      - text
-      - media_urls
-      - thumbnail_url
+      - items
       properties:
-        title:
-          type:
-          - string
-          - 'null'
-        text:
-          type:
-          - string
-          - 'null'
-        media_urls:
+        items:
           type: array
           items:
-            type: string
-            format: uri
-        thumbnail_url:
-          type:
-          - string
-          - 'null'
-          format: uri
+            $ref: '#/components/schemas/SocialPost'
       additionalProperties: false
-    Error:
-      type: object
-      required:
-      - type
-      - message
-      - status
-      properties:
-        type:
-          type: string
-          example: INVALID_REQUEST
-        message:
-          type: string
-          example: A required request parameter is missing or invalid
-        status:
-          type: integer
-          minimum: 400
-          maximum: 599
-      additionalProperties: false
-    SocialPost:
-      type: object
-      required:
-      - id
-      - platform
-      - url
-      - content
-      - author
-      - engagement
-      - published_at
-      - ext
-      properties:
-        id:
-          type: string
-        platform:
-          type: string
-          enum:
-          - linkedin
-          - x
-          - reddit
-          - facebook
-          - hackernews
-          - tiktok
-          - youtube
-          - pinterest
-          - discourse
-        url:
-          type:
-          - string
-          - 'null'
-          format: uri
-        content:
-          $ref: '#/components/schemas/Content'
-        author:
-          $ref: '#/components/schemas/Author'
-        engagement:
-          $ref: '#/components/schemas/Engagement'
-        published_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        ext:
-          type: object
-          description: Platform-specific normalized fields.
-          additionalProperties: true
-      additionalProperties: false
-    Pagination:
-      type: object
-      required:
-      - next_cursor
-      - has_more
-      - page_size
-      properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: A provider cursor for a future paginated request, when available.
-        has_more:
-          type: boolean
-        page_size:
-          type: integer
-          minimum: 0
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      required:
-      - success
-      - error
-      - request_id
-      - credits_used
-      - credits_remaining
-      properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          $ref: '#/components/schemas/Error'
-        request_id:
-          type: string
-        credits_used:
-          type: integer
-          const: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
-      additionalProperties: false
-      example:
-        success: false
-        error:
-          type: INVALID_REQUEST
-          message: A required request parameter is missing or invalid
-          status: 400
-        request_id: req_example123
-        credits_used: 0
-        credits_remaining: 100
     Author:
       type: object
       required:
@@ -589,6 +260,54 @@ components:
         verified:
           type:
           - boolean
+          - 'null'
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+      additionalProperties: false
+    Engagement:
+      type: object
+      required:
+      - views
+      - likes
+      - comments
+      - shares
+      - saves
+      properties:
+        views:
+          type:
+          - integer
+          - 'null'
+        likes:
+          type:
+          - integer
+          - 'null'
+        comments:
+          type:
+          - integer
+          - 'null'
+        shares:
+          type:
+          - integer
+          - 'null'
+        saves:
+          type:
+          - integer
           - 'null'
       additionalProperties: false
     SocialSearchResponse:
@@ -638,48 +357,326 @@ components:
           - 'null'
           minimum: 0
       additionalProperties: false
-    SocialSearchData:
+    ErrorResponse:
       type: object
       required:
-      - items
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SocialPost'
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
+    SocialPost:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - content
+      - author
+      - engagement
+      - published_at
+      - ext
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          enum:
+          - linkedin
+          - x
+          - reddit
+          - facebook
+          - hackernews
+          - tiktok
+          - youtube
+          - pinterest
+          - discourse
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+        content:
+          $ref: '#/components/schemas/Content'
+        author:
+          $ref: '#/components/schemas/Author'
+        engagement:
+          $ref: '#/components/schemas/Engagement'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ext:
+          type: object
+          description: Platform-specific normalized fields.
+          additionalProperties: true
       additionalProperties: false
     RawResponse:
       description: The unchanged upstream provider response. Returned only when the request sets raw to true.
-    Engagement:
+    Content:
       type: object
       required:
-      - views
-      - likes
-      - comments
-      - shares
-      - saves
+      - title
+      - text
+      - media_urls
+      - thumbnail_url
       properties:
-        views:
+        title:
           type:
-          - integer
+          - string
           - 'null'
-        likes:
+        text:
           type:
-          - integer
+          - string
           - 'null'
-        comments:
+        media_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        thumbnail_url:
           type:
-          - integer
+          - string
           - 'null'
-        shares:
-          type:
-          - integer
-          - 'null'
-        saves:
-          type:
-          - integer
-          - 'null'
+          format: uri
       additionalProperties: false
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+  responses:
+    InternalError:
+      description: The request could not be completed because of an internal error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidApiKey:
+      description: The API key is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_API_KEY
+              message: The API key is invalid
+              status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    RateLimited:
+      description: The API key exceeded the rate limit.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+  headers:
+    RateLimitLimit:
+      description: The maximum requests allowed in the current minute.
+      schema:
+        type: integer
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
+    RetryAfter:
+      description: The seconds until another request can be attempted.
+      schema:
+        type: integer
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -689,6 +686,3 @@ components:
 externalDocs:
   description: SocialListeningAPI documentation
   url: https://sociallisteningapi.com/docs/introduction
-x-refined-from:
-- sociallisteningapi-openapi.json
-- sociallisteningapi-openapi.yml
