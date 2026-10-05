@@ -1,0 +1,12 @@
+{
+ "url": "https://api.sociallisteningapi.com/openapi.json",
+ "requested_url": "https://api.sociallisteningapi.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 130509,
+ "sha256": "0e9f7a50590d6c5f19201f2e3b275af43e7cca2f9622591055f415212d5ca040",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
