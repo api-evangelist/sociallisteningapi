@@ -62,3 +62,29 @@ metering:
   - Out of credits returns 402 Payment Required.
   source: https://sociallisteningapi.com/docs/introduction; per-operation x-credit-cost in openapi/sociallisteningapi-openapi.yml
 plan_count: 3
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free signup credits
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Starter
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Growth
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
