@@ -1,0 +1,32 @@
+# Front Door AI Index — sociallisteningapi — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: sociallisteningapi
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: sociallisteningapi.com
+  final_host: sociallisteningapi.com
+  ownership: own
+  owner: sociallisteningapi
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 6
+  band: 4
+  band_label: moderate
+  host_score: 6
+  density: 8.38
+  words: 716
+  tiers:
+    agentic: 2
+    core: 3
+    model: 1
+  ambiguous: 6
+  top_terms:
+    agent: 6
+    AI: 3
+    AI agent: 1
+    ChatGPT: 1
+    MCP: 1
