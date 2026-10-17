@@ -400,35 +400,28 @@ paths:
               username: instagram
               raw: true
 components:
+  headers:
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
+    RateLimitLimit:
+      description: The maximum requests allowed in the current minute.
+      schema:
+        type: integer
+    RateLimitRemaining:
+      description: The requests remaining in the current minute.
+      schema:
+        type: integer
+    RetryAfter:
+      description: The seconds until another request can be attempted.
+      schema:
+        type: integer
   schemas:
-    DiscoverySearchData:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryResult'
-      additionalProperties: false
-    Error:
-      type: object
-      required:
-      - type
-      - message
-      - status
-      properties:
-        type:
-          type: string
-          example: INVALID_REQUEST
-        message:
-          type: string
-          example: A required request parameter is missing or invalid
-        status:
-          type: integer
-          minimum: 400
-          maximum: 599
-      additionalProperties: false
     DiscoveryResult:
       type: object
       required:
@@ -486,80 +479,34 @@ components:
           description: Platform-specific normalized discovery fields.
           additionalProperties: true
       additionalProperties: false
-    ErrorResponse:
+    DiscoverySearchData:
       type: object
       required:
-      - success
-      - error
-      - request_id
-      - credits_used
-      - credits_remaining
+      - items
       properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          $ref: '#/components/schemas/Error'
-        request_id:
-          type: string
-        credits_used:
-          type: integer
-          const: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryResult'
       additionalProperties: false
-      example:
-        success: false
-        error:
-          type: INVALID_REQUEST
-          message: A required request parameter is missing or invalid
-          status: 400
-        request_id: req_example123
-        credits_used: 0
-        credits_remaining: 100
-    DiscoverySearchResponse:
+    Pagination:
       type: object
       required:
-      - success
-      - platform
-      - endpoint
-      - data
-      - pagination
-      - request_id
-      - credits_used
-      - credits_remaining
+      - next_cursor
+      - has_more
+      - page_size
       properties:
-        success:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
           type: boolean
-          const: true
-        platform:
-          type: string
-          const: instagram
-        endpoint:
-          type: string
-        data:
-          $ref: '#/components/schemas/DiscoverySearchData'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        raw:
-          $ref: '#/components/schemas/RawResponse'
-        request_id:
-          type: string
-          example: req_4QfL8rGv2NwK7zXp
-        credits_used:
+        page_size:
           type: integer
           minimum: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
       additionalProperties: false
-    RawResponse:
-      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
     ProfileResponse:
       type: object
       required:
@@ -601,6 +548,40 @@ components:
           - 'null'
           minimum: 0
       additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
     Profile:
       type: object
       required:
@@ -695,27 +676,67 @@ components:
           description: Platform-specific normalized profile fields.
           additionalProperties: true
       additionalProperties: false
-    Pagination:
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    DiscoverySearchResponse:
       type: object
       required:
-      - next_cursor
-      - has_more
-      - page_size
+      - success
+      - platform
+      - endpoint
+      - data
+      - pagination
+      - request_id
+      - credits_used
+      - credits_remaining
       properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: A provider cursor for a future paginated request, when available.
-        has_more:
+        success:
           type: boolean
-        page_size:
+          const: true
+        platform:
+          type: string
+          const: instagram
+        endpoint:
+          type: string
+        data:
+          $ref: '#/components/schemas/DiscoverySearchData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        raw:
+          $ref: '#/components/schemas/RawResponse'
+        request_id:
+          type: string
+          example: req_4QfL8rGv2NwK7zXp
+        credits_used:
           type: integer
           minimum: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - type
+      - message
+      - status
+      properties:
+        type:
+          type: string
+          example: INVALID_REQUEST
+        message:
+          type: string
+          example: A required request parameter is missing or invalid
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
       additionalProperties: false
   responses:
-    InternalError:
-      description: The request could not be completed because of an internal error.
+    RateLimited:
+      description: The API key exceeded the rate limit.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -725,6 +746,8 @@ components:
           $ref: '#/components/headers/RateLimitRemaining'
         X-RateLimit-Reset:
           $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
       content:
         application/json:
           schema:
@@ -732,33 +755,9 @@ components:
           example:
             success: false
             error:
-              type: INTERNAL_ERROR
-              message: Internal server error
-              status: 500
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    UpstreamProviderError:
-      description: The upstream provider request failed or returned an invalid response.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: UPSTREAM_PROVIDER_ERROR
-              message: The upstream provider request failed
-              status: 502
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -810,8 +809,8 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
-    InvalidRequest:
-      description: A required request parameter is missing or invalid.
+    InternalError:
+      description: The request could not be completed because of an internal error.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -828,14 +827,14 @@ components:
           example:
             success: false
             error:
-              type: INVALID_REQUEST
-              message: A required request parameter is missing or invalid
-              status: 400
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
-    RateLimited:
-      description: The API key exceeded the rate limit.
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
       headers:
         X-Request-Id:
           $ref: '#/components/headers/RequestId'
@@ -845,8 +844,6 @@ components:
           $ref: '#/components/headers/RateLimitRemaining'
         X-RateLimit-Reset:
           $ref: '#/components/headers/RateLimitReset'
-        Retry-After:
-          $ref: '#/components/headers/RetryAfter'
       content:
         application/json:
           schema:
@@ -854,9 +851,9 @@ components:
           example:
             success: false
             error:
-              type: RATE_LIMITED
-              message: The API key has reached 120 requests per minute
-              status: 429
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
@@ -884,27 +881,30 @@ components:
             request_id: req_example123
             credits_used: 0
             credits_remaining: 100
-  headers:
-    RateLimitLimit:
-      description: The maximum requests allowed in the current minute.
-      schema:
-        type: integer
-    RateLimitRemaining:
-      description: The requests remaining in the current minute.
-      schema:
-        type: integer
-    RequestId:
-      description: The unique ID assigned to the request.
-      schema:
-        type: string
-    RetryAfter:
-      description: The seconds until another request can be attempted.
-      schema:
-        type: integer
-    RateLimitReset:
-      description: The Unix timestamp when the current rate-limit window resets.
-      schema:
-        type: integer
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

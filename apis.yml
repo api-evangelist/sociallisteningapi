@@ -417,8 +417,6 @@ apis:
   humanURL: https://sociallisteningapi.com/mcp
   baseURL: https://api.sociallisteningapi.com/mcp
   tags:
-  - LinkedIn
-  tags_raw:
   - Linked In
   properties:
   - type: OpenAPI

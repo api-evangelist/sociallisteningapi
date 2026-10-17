@@ -184,178 +184,15 @@ paths:
               exact: true
               raw: true
 components:
-  responses:
-    InternalError:
-      description: The request could not be completed because of an internal error.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INTERNAL_ERROR
-              message: Internal server error
-              status: 500
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    UpstreamProviderError:
-      description: The upstream provider request failed or returned an invalid response.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: UPSTREAM_PROVIDER_ERROR
-              message: The upstream provider request failed
-              status: 502
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    WorkspaceNotActivated:
-      description: The workspace is not activated.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: WORKSPACE_NOT_ACTIVATED
-              message: The workspace email must be activated
-              status: 403
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidApiKey:
-      description: The API key is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_API_KEY
-              message: The API key is invalid
-              status: 401
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InvalidRequest:
-      description: A required request parameter is missing or invalid.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INVALID_REQUEST
-              message: A required request parameter is missing or invalid
-              status: 400
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    RateLimited:
-      description: The API key exceeded the rate limit.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-        Retry-After:
-          $ref: '#/components/headers/RetryAfter'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: RATE_LIMITED
-              message: The API key has reached 120 requests per minute
-              status: 429
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
-    InsufficientCredits:
-      description: The workspace does not have enough credits.
-      headers:
-        X-Request-Id:
-          $ref: '#/components/headers/RequestId'
-        X-RateLimit-Limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        X-RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimitRemaining'
-        X-RateLimit-Reset:
-          $ref: '#/components/headers/RateLimitReset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            success: false
-            error:
-              type: INSUFFICIENT_CREDITS
-              message: The workspace does not have enough API credits
-              status: 402
-            request_id: req_example123
-            credits_used: 0
-            credits_remaining: 100
   headers:
+    RateLimitReset:
+      description: The Unix timestamp when the current rate-limit window resets.
+      schema:
+        type: integer
+    RequestId:
+      description: The unique ID assigned to the request.
+      schema:
+        type: string
     RateLimitLimit:
       description: The maximum requests allowed in the current minute.
       schema:
@@ -364,19 +201,107 @@ components:
       description: The requests remaining in the current minute.
       schema:
         type: integer
-    RequestId:
-      description: The unique ID assigned to the request.
-      schema:
-        type: string
     RetryAfter:
       description: The seconds until another request can be attempted.
       schema:
         type: integer
-    RateLimitReset:
-      description: The Unix timestamp when the current rate-limit window resets.
-      schema:
-        type: integer
   schemas:
+    Pagination:
+      type: object
+      required:
+      - next_cursor
+      - has_more
+      - page_size
+      properties:
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: A provider cursor for a future paginated request, when available.
+        has_more:
+          type: boolean
+        page_size:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    GoogleSearchData:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleResult'
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      required:
+      - success
+      - error
+      - request_id
+      - credits_used
+      - credits_remaining
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          $ref: '#/components/schemas/Error'
+        request_id:
+          type: string
+        credits_used:
+          type: integer
+          const: 0
+        credits_remaining:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+      additionalProperties: false
+      example:
+        success: false
+        error:
+          type: INVALID_REQUEST
+          message: A required request parameter is missing or invalid
+          status: 400
+        request_id: req_example123
+        credits_used: 0
+        credits_remaining: 100
+    RawResponse:
+      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
+    GoogleResult:
+      type: object
+      required:
+      - id
+      - platform
+      - url
+      - title
+      - description
+      - published_at
+      properties:
+        id:
+          type: string
+        platform:
+          type: string
+          const: google
+        url:
+          type: string
+          format: uri
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        published_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      additionalProperties: false
     Error:
       type: object
       required:
@@ -433,102 +358,177 @@ components:
           - 'null'
           minimum: 0
       additionalProperties: false
-    GoogleResult:
-      type: object
-      required:
-      - id
-      - platform
-      - url
-      - title
-      - description
-      - published_at
-      properties:
-        id:
-          type: string
-        platform:
-          type: string
-          const: google
-        url:
-          type: string
-          format: uri
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        published_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      required:
-      - success
-      - error
-      - request_id
-      - credits_used
-      - credits_remaining
-      properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          $ref: '#/components/schemas/Error'
-        request_id:
-          type: string
-        credits_used:
-          type: integer
-          const: 0
-        credits_remaining:
-          type:
-          - integer
-          - 'null'
-          minimum: 0
-      additionalProperties: false
-      example:
-        success: false
-        error:
-          type: INVALID_REQUEST
-          message: A required request parameter is missing or invalid
-          status: 400
-        request_id: req_example123
-        credits_used: 0
-        credits_remaining: 100
-    RawResponse:
-      description: The unchanged upstream provider response. Returned only when the request sets raw to true.
-    GoogleSearchData:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleResult'
-      additionalProperties: false
-    Pagination:
-      type: object
-      required:
-      - next_cursor
-      - has_more
-      - page_size
-      properties:
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: A provider cursor for a future paginated request, when available.
-        has_more:
-          type: boolean
-        page_size:
-          type: integer
-          minimum: 0
-      additionalProperties: false
+  responses:
+    RateLimited:
+      description: The API key exceeded the rate limit.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: RATE_LIMITED
+              message: The API key has reached 120 requests per minute
+              status: 429
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    WorkspaceNotActivated:
+      description: The workspace is not activated.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: WORKSPACE_NOT_ACTIVATED
+              message: The workspace email must be activated
+              status: 403
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidApiKey:
+      description: The API key is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_API_KEY
+              message: The API key is invalid
+              status: 401
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InternalError:
+      description: The request could not be completed because of an internal error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INTERNAL_ERROR
+              message: Internal server error
+              status: 500
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    UpstreamProviderError:
+      description: The upstream provider request failed or returned an invalid response.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: UPSTREAM_PROVIDER_ERROR
+              message: The upstream provider request failed
+              status: 502
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InsufficientCredits:
+      description: The workspace does not have enough credits.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INSUFFICIENT_CREDITS
+              message: The workspace does not have enough API credits
+              status: 402
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
+    InvalidRequest:
+      description: A required request parameter is missing or invalid.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            error:
+              type: INVALID_REQUEST
+              message: A required request parameter is missing or invalid
+              status: 400
+            request_id: req_example123
+            credits_used: 0
+            credits_remaining: 100
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
